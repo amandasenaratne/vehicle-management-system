@@ -1,10 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
 
-const LINKS = [
-  { to: "/", label: "Home", key: "home" },
-  { to: "/track-booking", label: "Track Booking", key: "track" },
-  { to: "/customer/portal", label: "My Portal", key: "portal" },
+const SECTION_LINKS = [
+  { id: "about", label: "About" },
+  { id: "services", label: "Services" },
+  { id: "process", label: "Process" },
+  { id: "contact", label: "Contact" },
 ];
 
 function BrandMark() {
@@ -21,57 +23,126 @@ function BrandMark() {
 
 export default function CustomerHeader({ active }) {
   const navigate = useNavigate();
-  const { customerUser, logoutCustomer } = useAuth();
+  const location = useLocation();
+  const { customerUser } = useAuth();
+  const displayName = customerUser?.name || customerUser?.email || "Customer";
+  const avatarLetter = displayName.trim().charAt(0).toUpperCase() || "C";
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+    const sectionFromHash = location.hash.replace("#", "");
+    if (SECTION_LINKS.some((item) => item.id === sectionFromHash)) {
+      setActiveSection(sectionFromHash);
+      return;
+    }
+    if (SECTION_LINKS.some((item) => item.id === active)) {
+      setActiveSection(active);
+      return;
+    }
+    setActiveSection("about");
+  }, [location.pathname, location.hash, active]);
+
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+    const sectionElements = SECTION_LINKS.map((item) => document.getElementById(item.id)).filter(Boolean);
+    if (!sectionElements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-34% 0px -52% 0px",
+        threshold: [0.12, 0.35, 0.6],
+      },
+    );
+
+    sectionElements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
+  const handleSectionClick = (id) => {
+    setActiveSection(id);
+    if (location.pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", `/#${id}`);
+      return;
+    }
+    navigate(`/#${id}`);
+  };
+
+  const handleBrandClick = (event) => {
+    if (location.pathname !== "/") return;
+    event.preventDefault();
+    window.history.replaceState(null, "", "/");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-3">
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4 sm:px-6">
+        <Link to="/" onClick={handleBrandClick} className="flex items-center gap-3">
           <BrandMark />
-          <div>
+          <div className="hidden sm:block">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Vehicle Management System</p>
             <h1 className="text-lg font-bold text-slate-900">AutoService Center</h1>
           </div>
         </Link>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <nav className="flex items-center gap-1 rounded-xl border border-slate-200 bg-slate-50 p-1">
-            {LINKS.map((link) => (
+        <nav className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+          {SECTION_LINKS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => handleSectionClick(item.id)}
+              className={`text-sm font-semibold transition-colors ${
+                location.pathname === "/" && activeSection === item.id ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+          {customerUser ? (
+            <span className="ml-2 inline-flex items-center gap-4 border-l border-slate-300 pl-4">
               <Link
-                key={link.to}
-                to={link.to}
-                className={`rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
-                  active === link.key ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900"
+                to="/track-booking"
+                className={`text-sm font-semibold transition-colors ${
+                  active === "track" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                {link.label}
+                Track Booking
               </Link>
-            ))}
-          </nav>
-          {customerUser ? (
-            <>
-              <span className="hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 sm:inline-flex">
-                {customerUser.name || customerUser.email}
-              </span>
-              <button
-                type="button"
-                onClick={() => {
-                  logoutCustomer();
-                  navigate("/customer/auth");
-                }}
-                className="btn-secondary text-sm"
+              <Link
+                to="/customer/portal"
+                className={`text-sm font-semibold transition-colors ${
+                  active === "portal" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                }`}
               >
-                Logout
-              </button>
-            </>
+                My Portal
+              </Link>
+            </span>
+          ) : null}
+        </nav>
+
+        <div className="flex items-center justify-end gap-2">
+          {customerUser ? (
+            <Link to="/customer/profile" className="flex items-center gap-2 rounded-lg px-1 py-1 text-slate-700 transition-colors hover:text-slate-900">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-blue-500 text-sm font-bold text-white">
+                {avatarLetter}
+              </span>
+              <span className="hidden text-sm font-semibold sm:inline-flex">{displayName}</span>
+            </Link>
           ) : (
             <Link to="/customer/auth" className="btn-primary text-sm">
               Sign In
             </Link>
           )}
-          <Link to="/admin/login" className="btn-secondary text-sm">
-            Admin Sign In
-          </Link>
         </div>
       </div>
     </header>

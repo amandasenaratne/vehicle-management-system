@@ -13,20 +13,24 @@ function ShieldIcon() {
 }
 
 export default function LoginPage() {
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const { adminUser, login } = useAuth();
+  const { adminUser, customerUser, login } = useAuth();
   const navigate = useNavigate();
 
   if (adminUser) {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
+  if (customerUser) {
+    return <Navigate to="/customer/portal" replace />;
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     try {
-      await login(form.username, form.password);
+      await login(form.email, form.password);
       toast.success("Welcome back");
       navigate("/admin/dashboard");
     } catch (error) {
@@ -37,7 +41,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 px-4 py-10 sm:px-6">
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-6 sm:px-6">
       <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_40px_70px_-45px_rgba(15,23,42,0.55)] lg:grid-cols-[1.1fr_0.9fr]">
         <section className="relative hidden bg-slate-900 p-10 text-white lg:block">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(59,130,246,0.3),transparent_40%),radial-gradient(circle_at_85%_10%,rgba(16,185,129,0.22),transparent_30%)]" />
@@ -66,16 +70,16 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="username" className="mb-1.5 block text-sm font-semibold text-slate-700">
-                Username
+              <label htmlFor="email" className="mb-1.5 block text-sm font-semibold text-slate-700">
+                Email
               </label>
               <input
-                id="username"
-                type="text"
-                value={form.username}
-                onChange={(event) => setForm((previous) => ({ ...previous, username: event.target.value }))}
+                id="email"
+                type="email"
+                value={form.email}
+                onChange={(event) => setForm((previous) => ({ ...previous, email: event.target.value }))}
                 className="input-field"
-                placeholder="admin"
+                placeholder="admin@autoservice.com"
                 required
                 autoFocus
               />

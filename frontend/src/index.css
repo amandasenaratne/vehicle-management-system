@@ -37,6 +37,10 @@
     min-height: 100%;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: var(--font-body);
     background:
@@ -61,9 +65,35 @@
     background-color: rgba(11, 94, 215, 0.2);
     color: var(--text-strong);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
 }
 
 @layer components {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px) scale(0.985);
+    transition:
+      opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
   .surface-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-soft);

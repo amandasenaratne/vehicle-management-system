@@ -6,13 +6,13 @@ export const AuthContext = createContext(null);
 const ADMIN_STORAGE_KEY = "adminUser";
 const CUSTOMER_STORAGE_KEY = "customerUser";
 
-const parseStoredUser = (key) => {
-  const raw = localStorage.getItem(key);
+const parseStoredUser = (storage, key) => {
+  const raw = storage.getItem(key);
   if (!raw) return null;
   try {
     return JSON.parse(raw);
   } catch {
-    localStorage.removeItem(key);
+    storage.removeItem(key);
     return null;
   }
 };
@@ -23,16 +23,22 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setAdminUser(parseStoredUser(ADMIN_STORAGE_KEY));
-    setCustomerUser(parseStoredUser(CUSTOMER_STORAGE_KEY));
+    const storedAdmin = parseStoredUser(sessionStorage, ADMIN_STORAGE_KEY);
+    const storedCustomer = parseStoredUser(localStorage, CUSTOMER_STORAGE_KEY);
+
+    // Clear legacy admin persistence from older builds that used localStorage.
+    localStorage.removeItem(ADMIN_STORAGE_KEY);
+
+    setAdminUser(storedAdmin);
+    setCustomerUser(storedCustomer);
     setLoading(false);
   }, []);
 
-  const adminLogin = useCallback(async (username, password) => {
-    const { data } = await axiosInstance.post("/auth/login", { username, password });
+  const adminLogin = useCallback(async (email, password) => {
+    const { data } = await axiosInstance.post("/auth/login", { username: email, password });
     const userData = data.data;
     setAdminUser(userData);
-    localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(userData));
+    sessionStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(userData));
     return userData;
   }, []);
 
@@ -54,6 +60,7 @@ export function AuthProvider({ children }) {
 
   const logoutAdmin = useCallback(() => {
     setAdminUser(null);
+    sessionStorage.removeItem(ADMIN_STORAGE_KEY);
     localStorage.removeItem(ADMIN_STORAGE_KEY);
   }, []);
 
