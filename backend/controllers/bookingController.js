@@ -7,13 +7,33 @@ const VALID_STATUSES = ["Pending", "Approved", "Completed", "Rejected"];
 // @access  Public
 const createBooking = async (req, res, next) => {
   try {
-    const { customerName, phone, vehicleNumber, serviceType, date, time, notes } = req.body;
+    const {
+      customerName,
+      phone,
+      vehicleNumber,
+      serviceType,
+      date,
+      time,
+      notes,
+    } = req.body;
 
     const booking = await prisma.booking.create({
-      data: { customerName, phone, vehicleNumber, serviceType, date, time, notes },
+      data: {
+        customerName,
+        phone,
+        vehicleNumber,
+        serviceType,
+        date,
+        time,
+        notes,
+      },
     });
 
-    res.status(201).json({ success: true, message: "Booking created successfully", data: booking });
+    res.status(201).json({
+      success: true,
+      message: "Booking created successfully",
+      data: booking,
+    });
   } catch (error) {
     next(error);
   }
@@ -44,7 +64,12 @@ const getAllBookings = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: bookings,
-      pagination: { total, page: Number(page), limit: Number(limit), pages: Math.ceil(total / Number(limit)) },
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        pages: Math.ceil(total / Number(limit)),
+      },
     });
   } catch (error) {
     next(error);
@@ -56,8 +81,13 @@ const getAllBookings = async (req, res, next) => {
 // @access  Private (Admin)
 const getBookingById = async (req, res, next) => {
   try {
-    const booking = await prisma.booking.findUnique({ where: { id: req.params.id } });
-    if (!booking) return res.status(404).json({ success: false, message: "Booking not found" });
+    const booking = await prisma.booking.findUnique({
+      where: { id: req.params.id },
+    });
+    if (!booking)
+      return res
+        .status(404)
+        .json({ success: false, message: "Booking not found" });
     res.status(200).json({ success: true, data: booking });
   } catch (error) {
     next(error);
@@ -72,7 +102,10 @@ const updateBookingStatus = async (req, res, next) => {
     const { status } = req.body;
 
     if (!VALID_STATUSES.includes(status)) {
-      return res.status(400).json({ success: false, message: `Status must be one of: ${VALID_STATUSES.join(", ")}` });
+      return res.status(400).json({
+        success: false,
+        message: `Status must be one of: ${VALID_STATUSES.join(", ")}`,
+      });
     }
 
     const booking = await prisma.booking.update({
@@ -80,9 +113,16 @@ const updateBookingStatus = async (req, res, next) => {
       data: { status },
     });
 
-    res.status(200).json({ success: true, message: "Booking status updated", data: booking });
+    res.status(200).json({
+      success: true,
+      message: "Booking status updated",
+      data: booking,
+    });
   } catch (error) {
-    if (error.code === "P2025") return res.status(404).json({ success: false, message: "Booking not found" });
+    if (error.code === "P2025")
+      return res
+        .status(404)
+        .json({ success: false, message: "Booking not found" });
     next(error);
   }
 };
@@ -93,9 +133,14 @@ const updateBookingStatus = async (req, res, next) => {
 const deleteBooking = async (req, res, next) => {
   try {
     await prisma.booking.delete({ where: { id: req.params.id } });
-    res.status(200).json({ success: true, message: "Booking deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Booking deleted successfully" });
   } catch (error) {
-    if (error.code === "P2025") return res.status(404).json({ success: false, message: "Booking not found" });
+    if (error.code === "P2025")
+      return res
+        .status(404)
+        .json({ success: false, message: "Booking not found" });
     next(error);
   }
 };
@@ -107,14 +152,15 @@ const getDashboardStats = async (req, res, next) => {
   try {
     const today = new Date().toISOString().split("T")[0];
 
-    const [total, pending, approved, completed, rejected, todayBookings] = await prisma.$transaction([
-      prisma.booking.count(),
-      prisma.booking.count({ where: { status: "Pending" } }),
-      prisma.booking.count({ where: { status: "Approved" } }),
-      prisma.booking.count({ where: { status: "Completed" } }),
-      prisma.booking.count({ where: { status: "Rejected" } }),
-      prisma.booking.count({ where: { date: today } }),
-    ]);
+    const [total, pending, approved, completed, rejected, todayBookings] =
+      await prisma.$transaction([
+        prisma.booking.count(),
+        prisma.booking.count({ where: { status: "Pending" } }),
+        prisma.booking.count({ where: { status: "Approved" } }),
+        prisma.booking.count({ where: { status: "Completed" } }),
+        prisma.booking.count({ where: { status: "Rejected" } }),
+        prisma.booking.count({ where: { date: today } }),
+      ]);
 
     res.status(200).json({
       success: true,
@@ -125,4 +171,93 @@ const getDashboardStats = async (req, res, next) => {
   }
 };
 
-export { createBooking, getAllBookings, getBookingById, updateBookingStatus, deleteBooking, getDashboardStats };
+// ...
+
+// @desc    Public: get booking by id (limited fields)
+// @route   GET /api/bookings/public/:id
+// @access  Public
+const getPublicBookingById = async (req, res, next) => {
+  try {
+    const booking = await prisma.booking.findUnique({
+      where: { id: req.params.id },
+      select: {
+        id: true,
+        customerName: true,
+        phone: true,
+        vehicleNumber: true,
+        serviceType: true,
+        date: true,
+        time: true,
+        status: true,
+        createdAt: true,
+      },
+    });
+
+    if (!booking) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Booking not found" });
+    }
+
+    res.status(200).json({ success: true, data: booking });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Public: lookup booking by vehicleNumber + phone
+// @route   GET /api/bookings/public/lookup?vehicleNumber=...&phone=...
+// @access  Public
+const lookupBooking = async (req, res, next) => {
+  try {
+    const { vehicleNumber, phone } = req.query;
+
+    if (!vehicleNumber || !phone) {
+      return res.status(400).json({
+        success: false,
+        message: "vehicleNumber and phone are required",
+      });
+    }
+
+    const booking = await prisma.booking.findFirst({
+      where: {
+        vehicleNumber,
+        phone,
+      },
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        customerName: true,
+        phone: true,
+        vehicleNumber: true,
+        serviceType: true,
+        date: true,
+        time: true,
+        status: true,
+        createdAt: true,
+      },
+    });
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "No booking found for given details",
+      });
+    }
+
+    res.status(200).json({ success: true, data: booking });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export {
+  createBooking,
+  getAllBookings,
+  getBookingById,
+  updateBookingStatus,
+  deleteBooking,
+  getDashboardStats,
+  getPublicBookingById,
+  lookupBooking,
+};
