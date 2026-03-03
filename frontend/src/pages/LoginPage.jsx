@@ -43,8 +43,9 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-6 sm:px-6">
       <div className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_40px_70px_-45px_rgba(15,23,42,0.55)] lg:grid-cols-[1.1fr_0.9fr]">
-        <section className="relative hidden bg-slate-900 p-10 text-white lg:block">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(59,130,246,0.3),transparent_40%),radial-gradient(circle_at_85%_10%,rgba(16,185,129,0.22),transparent_30%)]" />
+        <section className="relative hidden overflow-hidden bg-gradient-to-br from-[#102e58] via-[#174983] to-[#1f63aa] p-10 text-white lg:block">
+          <div className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
+          <div className="pointer-events-none absolute -right-16 bottom-0 h-56 w-56 rounded-full bg-cyan-200/25 blur-3xl" />
           <div className="relative z-10">
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
               <ShieldIcon />

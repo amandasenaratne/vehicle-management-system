@@ -36,37 +36,59 @@ function LogoutIcon() {
   );
 }
 
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.1">
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
 const navItems = [
   { to: "/admin/dashboard", label: "Dashboard", caption: "Performance and trends", Icon: DashboardIcon },
   { to: "/admin/bookings", label: "Bookings", caption: "Requests and statuses", Icon: BookingsIcon },
   { to: "/admin/services", label: "Services", caption: "Service catalog", Icon: ServicesIcon },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ mobile = false, onClose = () => {} }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     toast.success("Logged out successfully");
+    onClose();
     navigate("/admin/login");
   };
 
+  const rootClassName = mobile
+    ? "flex h-full w-[84vw] max-w-[330px] flex-col border-r border-slate-800 bg-slate-950 text-slate-100"
+    : "sticky top-0 flex h-screen w-72 flex-col border-r border-slate-800 bg-slate-950 text-slate-100";
+
   return (
-    <aside className="flex min-h-screen w-20 flex-col border-r border-slate-800 bg-slate-950 text-slate-100 md:w-72">
+    <aside className={rootClassName}>
       <div className="border-b border-slate-800 p-4 md:p-6">
-        <div className="flex items-center gap-3">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-500 text-white">
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M4 14h16" />
-              <path d="M6 14 8 8h8l2 6" />
-              <path d="M6.5 17a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm11 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-            </svg>
-          </span>
-          <div className="hidden md:block">
-            <h1 className="text-lg font-bold text-white">AutoService</h1>
-            <p className="text-xs text-slate-400">Console</p>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden ">
+              <img src="/imgs/logo.png" alt="Axis AutoCare logo" className="h-full w-full object-cover" />
+            </span>
+            <div className="min-w-0">
+              <h1 className="truncate text-lg font-bold text-white">Axis AutoCare</h1>
+              <p className="truncate text-xs text-slate-400">Admin Console</p>
+            </div>
           </div>
+
+          {mobile ? (
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-300 transition-colors hover:bg-slate-900 hover:text-white"
+              aria-label="Close sidebar"
+            >
+              <CloseIcon />
+            </button>
+          ) : null}
         </div>
       </div>
 
@@ -75,6 +97,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
+            onClick={mobile ? onClose : undefined}
             className={({ isActive }) =>
               `group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition-colors ${
                 isActive ? "bg-slate-800 text-white shadow-inner" : "text-slate-300 hover:bg-slate-900 hover:text-white"
@@ -85,7 +108,7 @@ export default function Sidebar() {
             <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-slate-200 group-hover:bg-slate-800">
               <Icon />
             </span>
-            <span className="hidden min-w-0 md:block">
+            <span className="min-w-0">
               <span className="block truncate">{label}</span>
               <span className="block truncate text-xs font-medium text-slate-400">{caption}</span>
             </span>
@@ -101,7 +124,7 @@ export default function Sidebar() {
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-300 group-hover:bg-rose-900/40">
             <LogoutIcon />
           </span>
-          <span className="hidden md:block">Logout</span>
+          <span>Logout</span>
         </button>
       </div>
     </aside>

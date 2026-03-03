@@ -607,7 +607,7 @@ export default function LandingPage() {
 
         <section
           id="about"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-20 pt-4 sm:px-6 lg:pb-28 lg:pt-6"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
@@ -618,7 +618,7 @@ export default function LandingPage() {
             </h3>
           </div>
 
-          <div className="surface-card mt-10 p-10 sm:mt-12 sm:p-14 lg:p-20">
+          <div className="surface-card mt-10 p-8 sm:mt-12 sm:p-10 lg:p-12">
             <div className="mx-auto max-w-4xl text-center">
               <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-3 lg:gap-7">
                 {[
@@ -682,8 +682,11 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="services" className="scroll-mt-24 py-16 lg:py-20">
-          <div data-reveal className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <section
+          id="services"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
+        >
+          <div data-reveal className="w-full">
             <div className="text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                 Services
@@ -697,7 +700,7 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="surface-card mt-10 px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
+            <div className="surface-card mt-10 p-8 sm:mt-12 sm:p-10 lg:p-12">
               <div
                 className="relative"
                 onMouseEnter={() => setIsCarouselPaused(true)}
@@ -801,7 +804,7 @@ export default function LandingPage() {
 
         <section
           id="process"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 sm:pt-12 lg:pb-24 lg:pt-16"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -818,7 +821,7 @@ export default function LandingPage() {
 
           <div
             data-reveal
-            className="surface-card mt-10 overflow-hidden p-10 sm:mt-12 sm:p-12 lg:p-16"
+            className="surface-card mt-10 overflow-hidden p-8 sm:mt-12 sm:p-10 lg:p-12"
           >
             <div className="space-y-4 md:hidden">
               {process.map((item, index) => {
@@ -943,7 +946,7 @@ export default function LandingPage() {
 
         <section
           id="faq"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-20"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -987,7 +990,7 @@ export default function LandingPage() {
 
         <section
           id="reviews"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -1055,7 +1058,7 @@ export default function LandingPage() {
 
         <section
           id="contact"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
         >
           <div className="relative overflow-hidden rounded-[28px] border border-[#d5e2f4] bg-gradient-to-br from-[#102e58] via-[#174983] to-[#1f63aa] px-6 py-10 text-white shadow-[0_30px_65px_-38px_rgba(12,26,49,0.95)] sm:px-10 lg:px-14 lg:py-14">
             <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
