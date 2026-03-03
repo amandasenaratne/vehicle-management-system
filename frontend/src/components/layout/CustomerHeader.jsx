@@ -28,6 +28,22 @@ export default function CustomerHeader({ active }) {
   const displayName = customerUser?.name || customerUser?.email || "Customer";
   const avatarLetter = displayName.trim().charAt(0).toUpperCase() || "C";
   const [activeSection, setActiveSection] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setIsScrolled(true);
+      return;
+    }
+
+    const syncScrolled = () => {
+      setIsScrolled(window.scrollY > 16);
+    };
+
+    syncScrolled();
+    window.addEventListener("scroll", syncScrolled, { passive: true });
+    return () => window.removeEventListener("scroll", syncScrolled);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (location.pathname !== "/") return;
@@ -84,18 +100,78 @@ export default function CustomerHeader({ active }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4 sm:px-6">
-        <Link to="/" onClick={handleBrandClick} className="flex items-center gap-3">
-          <BrandMark />
-          <div className="hidden sm:block">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Vehicle Management System</p>
-            <h1 className="text-lg font-bold text-slate-900">AutoService Center</h1>
-          </div>
-        </Link>
+  const isLandingTop = location.pathname === "/" && !isScrolled;
 
-        <nav className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+  return (
+    <header
+      className={`sticky top-0 z-40 border-b transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        isLandingTop
+          ? "border-transparent bg-transparent"
+          : "border-slate-200 bg-white shadow-[0_12px_34px_-26px_rgba(15,23,42,0.55)]"
+      }`}
+    >
+      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6">
+        <div className="relative flex items-center justify-between gap-4">
+          <Link to="/" onClick={handleBrandClick} className="flex items-center gap-3">
+            <BrandMark />
+            <div className="hidden sm:block">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Vehicle Management System</p>
+              <h1 className="text-lg font-bold text-slate-900">AutoService Center</h1>
+            </div>
+          </Link>
+
+          <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 lg:flex">
+            {SECTION_LINKS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleSectionClick(item.id)}
+                className={`text-sm font-semibold transition-colors ${
+                  location.pathname === "/" && activeSection === item.id ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="flex items-center justify-end gap-3">
+            {customerUser ? (
+              <div className="hidden items-center gap-4 border-r border-slate-300 pr-4 xl:flex">
+                <Link
+                  to="/track-booking"
+                  className={`text-sm font-semibold transition-colors ${
+                    active === "track" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  Track Booking
+                </Link>
+                <Link
+                  to="/customer/portal"
+                  className={`text-sm font-semibold transition-colors ${
+                    active === "portal" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  My Portal
+                </Link>
+              </div>
+            ) : null}
+            {customerUser ? (
+              <Link to="/customer/profile" className="flex items-center gap-2 rounded-lg px-1 py-1 text-slate-700 transition-colors hover:text-slate-900">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-blue-500 text-sm font-bold text-white">
+                  {avatarLetter}
+                </span>
+                <span className="hidden text-sm font-semibold sm:inline-flex">{displayName}</span>
+              </Link>
+            ) : (
+              <Link to="/customer/auth" className="btn-primary text-sm">
+                Sign In
+              </Link>
+            )}
+          </div>
+        </div>
+
+        <nav className="mt-3 flex flex-wrap items-center justify-center gap-4 lg:hidden">
           {SECTION_LINKS.map((item) => (
             <button
               key={item.id}
@@ -108,42 +184,7 @@ export default function CustomerHeader({ active }) {
               {item.label}
             </button>
           ))}
-          {customerUser ? (
-            <span className="ml-2 inline-flex items-center gap-4 border-l border-slate-300 pl-4">
-              <Link
-                to="/track-booking"
-                className={`text-sm font-semibold transition-colors ${
-                  active === "track" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                Track Booking
-              </Link>
-              <Link
-                to="/customer/portal"
-                className={`text-sm font-semibold transition-colors ${
-                  active === "portal" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                My Portal
-              </Link>
-            </span>
-          ) : null}
         </nav>
-
-        <div className="flex items-center justify-end gap-2">
-          {customerUser ? (
-            <Link to="/customer/profile" className="flex items-center gap-2 rounded-lg px-1 py-1 text-slate-700 transition-colors hover:text-slate-900">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-blue-500 text-sm font-bold text-white">
-                {avatarLetter}
-              </span>
-              <span className="hidden text-sm font-semibold sm:inline-flex">{displayName}</span>
-            </Link>
-          ) : (
-            <Link to="/customer/auth" className="btn-primary text-sm">
-              Sign In
-            </Link>
-          )}
-        </div>
       </div>
     </header>
   );

@@ -200,6 +200,30 @@ function MailIcon() {
   );
 }
 
+function HelpCircleIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.8 9.2a2.6 2.6 0 1 1 4.3 2c-.7.5-1.4 1-1.4 2v.4" />
+      <circle cx="12" cy="16.7" r="0.8" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function StarIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+      <path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z" />
+    </svg>
+  );
+}
+
 const serviceIcons = [
   EngineIcon,
   ToolsIcon,
@@ -287,6 +311,56 @@ const contactChannels = [
   },
 ];
 
+const faqItems = [
+  {
+    question: "How do I create my first appointment?",
+    answer:
+      "Create your customer account, choose a service category, select a preferred date and time slot, then submit your booking request in a few steps.",
+  },
+  {
+    question: "Can I track my booking after confirmation?",
+    answer:
+      "Yes. Your portal shows live status updates, service history, and appointment timelines so you always know the current progress.",
+  },
+  {
+    question: "Do you handle fleet and business vehicles?",
+    answer:
+      "We support both individual drivers and fleet operators with structured workflows, preventive schedules, and centralized service visibility.",
+  },
+  {
+    question: "How will I know when service is completed?",
+    answer:
+      "You will see completion updates in your portal and can review the final service record with date, category, and status details.",
+  },
+];
+
+const customerReviews = [
+  {
+    name: "A. Perera",
+    role: "Daily Driver",
+    service: "Preventive Maintenance",
+    rating: 5,
+    quote:
+      "The booking flow was fast and transparent. Every status update appeared on time, and the handover quality was excellent.",
+  },
+  {
+    name: "S. Fernando",
+    role: "Fleet Coordinator",
+    service: "Fleet Diagnostics",
+    rating: 5,
+    quote:
+      "Clear communication and reliable turnaround. The portal makes it easy to track multiple vehicle jobs without confusion.",
+  },
+  {
+    name: "K. Jayasinghe",
+    role: "Business Owner",
+    service: "Brake and Safety Service",
+    rating: 5,
+    quote:
+      "Professional team, predictable timelines, and clean service records. It feels like a proper enterprise support experience.",
+  },
+];
+
 function useCountUp(target, duration = 1700) {
   const [count, setCount] = useState(0);
 
@@ -323,20 +397,22 @@ function AnimatedMetric({ label, value, decimals = 0, suffix = "", Icon }) {
   return (
     <div
       data-reveal
-      className="flex min-h-[132px] flex-col justify-center rounded-2xl border border-slate-200 bg-white/75 px-6 py-6 text-center shadow-[0_18px_38px_-30px_rgba(15,23,42,0.65)] backdrop-blur sm:px-7 sm:py-7"
+      className="flex min-h-[128px] items-center gap-4 rounded-xl border border-slate-200 bg-white/75 px-5 py-5 text-left shadow-[0_18px_38px_-30px_rgba(15,23,42,0.65)] backdrop-blur sm:px-6 sm:py-6"
     >
       {Icon ? (
-        <span className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
           <Icon />
         </span>
       ) : null}
-      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
-        {label}
-      </p>
-      <p className="mt-3 text-3xl font-extrabold text-slate-900">
-        {formatted}
-        {suffix}
-      </p>
+      <div className="min-w-0">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+          {label}
+        </p>
+        <p className="mt-2 text-3xl font-extrabold text-slate-900">
+          {formatted}
+          {suffix}
+        </p>
+      </div>
     </div>
   );
 }
@@ -438,7 +514,7 @@ export default function LandingPage() {
 
         <section
           id="home"
-          className="scroll-mt-24 mx-auto w-full max-w-6xl px-4 pb-12 pt-12 text-center sm:px-6 lg:pb-16 lg:pt-16"
+          className="scroll-mt-24 mx-auto flex min-h-[calc(100vh-6.5rem)] w-full max-w-6xl flex-col justify-center px-4 pb-14 pt-10 text-center sm:px-6 lg:pb-20 lg:pt-15"
         >
           <p
             data-reveal
@@ -577,128 +653,129 @@ export default function LandingPage() {
 
         <section
           id="services"
-          className="scroll-mt-24 relative overflow-hidden bg-gradient-to-br from-[#153f78] via-[#1d5ca7] to-[#2d7fd0] py-16 text-white lg:py-20"
+          className="scroll-mt-24 py-16 lg:py-20"
         >
-          <div className="pointer-events-none absolute -left-24 -top-20 h-64 w-64 rounded-full bg-blue-200/35 blur-3xl" />
-          <div className="pointer-events-none absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-cyan-100/35 blur-3xl" />
           <div
             data-reveal
-            className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6"
+            className="mx-auto w-full max-w-7xl px-4 sm:px-6"
           >
             <div className="text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                 Services
               </p>
-              <h3 className="mt-2 text-3xl font-bold text-white sm:text-4xl">
+              <h3 className="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl">
                 Workshop Capabilities
               </h3>
-              <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-blue-100/90">
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-slate-600">
                 Structured service modules designed for reliability, safety, and
                 measurable operational quality.
               </p>
             </div>
 
-            <div
-              className="relative mt-10"
-              onMouseEnter={() => setIsCarouselPaused(true)}
-              onMouseLeave={() => setIsCarouselPaused(false)}
-            >
-              <button
-                type="button"
-                onClick={() =>
-                  setSlideIndex((current) => {
-                    if (current <= 0) return maxSlideIndex;
-                    return Math.max(current - cardsPerView, 0);
-                  })
-                }
-                className="absolute left-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-blue-200/40 bg-blue-950/55 text-blue-50 transition-colors hover:bg-blue-900/70 md:inline-flex"
-                aria-label="Previous services"
+            <div className="surface-card mt-10 px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
+
+              <div
+                className="relative"
+                onMouseEnter={() => setIsCarouselPaused(true)}
+                onMouseLeave={() => setIsCarouselPaused(false)}
               >
-                <ChevronLeftIcon />
-              </button>
-
-              <div className="overflow-hidden px-0 md:px-14">
-                <div
-                  className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                  style={{
-                    transform: `translateX(-${(slideIndex * 100) / cardsPerView}%)`,
-                  }}
-                >
-                  {servicesList.map((service, index) => {
-                    const Icon = serviceIcons[index % serviceIcons.length];
-                    return (
-                      <div
-                        key={service.id}
-                        className="w-full shrink-0 px-2"
-                        style={{
-                          flexBasis: `${100 / cardsPerView}%`,
-                        }}
-                      >
-                        <article className="h-full rounded-2xl border border-blue-100/30 bg-blue-950/30 p-6 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.95)] backdrop-blur">
-                          <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-300/20 text-blue-50">
-                            <Icon />
-                          </span>
-                          <h4 className="mt-4 text-lg font-bold text-white">
-                            {service.name}
-                          </h4>
-                          <p className="mt-3 text-sm leading-7 text-blue-100/90">
-                            {service.description ||
-                              "Professional service delivered by certified technicians with standardized quality checks."}
-                          </p>
-                        </article>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setSlideIndex((current) => {
-                    const next = current + cardsPerView;
-                    return next > maxSlideIndex ? 0 : next;
-                  })
-                }
-                className="absolute right-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-blue-200/40 bg-blue-950/55 text-blue-50 transition-colors hover:bg-blue-900/70 md:inline-flex"
-                aria-label="Next services"
-              >
-                <ChevronRightIcon />
-              </button>
-            </div>
-
-            <div className="mt-6 flex justify-center gap-2">
-              {Array.from({ length: totalPages }, (_, index) => (
                 <button
-                  key={index}
                   type="button"
                   onClick={() =>
-                    setSlideIndex(Math.min(index * cardsPerView, maxSlideIndex))
+                    setSlideIndex((current) => {
+                      if (current <= 0) return maxSlideIndex;
+                      return Math.max(current - cardsPerView, 0);
+                    })
                   }
-                  className={`h-2.5 rounded-full transition-all ${
-                    activePage === index
-                      ? "w-8 bg-blue-100"
-                      : "w-2.5 bg-blue-300/55 hover:bg-blue-200/80"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+                  className="absolute left-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-300 bg-white/85 text-slate-700 transition-colors hover:bg-white md:inline-flex"
+                  aria-label="Previous services"
+                >
+                  <ChevronLeftIcon />
+                </button>
 
-            <div className="mt-8 flex justify-center">
-              <Link
-                to="/customer/auth"
-                className="btn-primary px-8 py-3 text-sm"
-              >
-                Book a Service
-              </Link>
+                <div className="overflow-hidden px-0 md:px-14">
+                  <div
+                    className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                    style={{
+                      transform: `translateX(-${(slideIndex * 100) / cardsPerView}%)`,
+                    }}
+                  >
+                    {servicesList.map((service, index) => {
+                      const Icon = serviceIcons[index % serviceIcons.length];
+                      return (
+                        <div
+                          key={service.id}
+                          className="w-full shrink-0 px-2"
+                          style={{
+                            flexBasis: `${100 / cardsPerView}%`,
+                          }}
+                        >
+                          <article className="h-full rounded-2xl border border-slate-200/90 bg-white/72 p-6 shadow-[0_18px_36px_-30px_rgba(15,23,42,0.45)] backdrop-blur">
+                            <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+                              <Icon />
+                            </span>
+                            <h4 className="mt-4 text-lg font-bold text-slate-900">
+                              {service.name}
+                            </h4>
+                            <p className="mt-3 text-sm leading-7 text-slate-600">
+                              {service.description ||
+                                "Professional service delivered by certified technicians with standardized quality checks."}
+                            </p>
+                          </article>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSlideIndex((current) => {
+                      const next = current + cardsPerView;
+                      return next > maxSlideIndex ? 0 : next;
+                    })
+                  }
+                  className="absolute right-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-300 bg-white/85 text-slate-700 transition-colors hover:bg-white md:inline-flex"
+                  aria-label="Next services"
+                >
+                  <ChevronRightIcon />
+                </button>
+              </div>
+
+              <div className="mt-6 flex justify-center gap-2">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() =>
+                      setSlideIndex(Math.min(index * cardsPerView, maxSlideIndex))
+                    }
+                    className={`h-2.5 rounded-full transition-all ${
+                      activePage === index
+                        ? "w-8 bg-blue-600"
+                        : "w-2.5 bg-slate-300 hover:bg-slate-400"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-8 flex justify-center">
+                <Link
+                  to="/customer/auth"
+                  className="btn-primary px-8 py-3 text-sm"
+                >
+                  Book a Service
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
         <section
           id="process"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-2 sm:px-6 lg:pb-24 lg:pt-4"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 sm:pt-12 lg:pb-24 lg:pt-16"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -734,6 +811,118 @@ export default function LandingPage() {
                   <p className="mt-3 text-sm leading-7 text-slate-600">
                     {item.description}
                   </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="faq"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-20"
+        >
+          <div data-reveal className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Q&A
+            </p>
+            <h3 className="mt-4 text-3xl font-bold text-slate-900">
+              Frequently Asked Questions
+            </h3>
+            <p className="mt-5 text-base leading-8 text-slate-600">
+              Quick answers to common customer and fleet booking questions.
+            </p>
+          </div>
+
+          <div className="surface-card mt-10 p-8 sm:mt-12 sm:p-10 lg:p-12">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
+              {faqItems.map((item, index) => (
+                <article
+                  key={item.question}
+                  data-reveal
+                  style={{ transitionDelay: `${index * 90}ms` }}
+                  className="surface-muted h-full p-5 sm:p-6"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+                      <HelpCircleIcon />
+                    </span>
+                    <div>
+                      <h4 className="text-base font-bold text-slate-900">
+                        {item.question}
+                      </h4>
+                      <p className="mt-2 text-sm leading-7 text-slate-600">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="reviews"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24"
+        >
+          <div data-reveal className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Ratings & Reviews
+            </p>
+            <h3 className="mt-4 text-3xl font-bold text-slate-900">
+              Trusted Feedback from Real Customers
+            </h3>
+            <p className="mt-5 text-base leading-8 text-slate-600">
+              Verified service experiences from drivers and operational teams.
+            </p>
+          </div>
+
+          <div className="surface-card mt-10 p-8 sm:mt-12 sm:p-10 lg:p-12">
+            <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-center gap-3 rounded-2xl border border-blue-100 bg-blue-50/70 px-5 py-4 text-center">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+                <ShieldCheckIcon />
+              </span>
+              <p className="text-sm font-semibold text-slate-700">
+                4.9/5 average rating from verified service feedback.
+              </p>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3 lg:mt-10 lg:gap-6">
+              {customerReviews.map((review, index) => (
+                <article
+                  key={`${review.name}-${review.service}`}
+                  data-reveal
+                  style={{ transitionDelay: `${index * 110}ms` }}
+                  className="h-full rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-6 shadow-[0_18px_32px_-28px_rgba(15,23,42,0.75)]"
+                >
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: 5 }, (_, starIndex) => (
+                      <span
+                        key={starIndex}
+                        className={
+                          starIndex < review.rating
+                            ? "text-amber-400"
+                            : "text-slate-300"
+                        }
+                      >
+                        <StarIcon />
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm leading-7 text-slate-600">
+                    "{review.quote}"
+                  </p>
+                  <div className="mt-5 border-t border-slate-200 pt-4">
+                    <p className="text-sm font-bold text-slate-900">
+                      {review.name}
+                    </p>
+                    <p className="mt-1 text-xs uppercase tracking-[0.08em] text-slate-500">
+                      {review.role}
+                    </p>
+                    <p className="mt-2 text-xs font-semibold text-blue-700">
+                      {review.service}
+                    </p>
+                  </div>
                 </article>
               ))}
             </div>
