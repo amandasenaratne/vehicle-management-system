@@ -22,10 +22,10 @@ export default function BookingTable({ bookings, onStatusChange, onDelete, loadi
 
   return (
     <div className="overflow-x-auto">
-      <table className="data-table min-w-[980px] w-full">
+      <table className="data-table min-w-[1140px] w-full">
         <thead>
           <tr>
-            {["Customer", "Contact", "Vehicle", "Service", "Schedule", "Status", "Actions"].map((heading) => (
+            {["Customer", "Contact", "Vehicle", "Service", "Description", "Schedule", "Status", "Actions"].map((heading) => (
               <th key={heading}>{heading}</th>
             ))}
           </tr>
@@ -40,6 +40,9 @@ export default function BookingTable({ bookings, onStatusChange, onDelete, loadi
               <td className="text-slate-700">{booking.phone}</td>
               <td className="font-semibold text-slate-700">{booking.vehicleNumber}</td>
               <td className="text-slate-700">{booking.serviceType}</td>
+              <td className="max-w-[260px] text-sm text-slate-700">
+                <p className="line-clamp-2">{booking.notes?.trim() || "No description provided"}</p>
+              </td>
               <td>
                 <p className="font-semibold text-slate-900">{booking.date}</p>
                 <p className="text-xs text-slate-500">{booking.time}</p>
