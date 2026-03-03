@@ -315,7 +315,7 @@ const faqItems = [
   {
     question: "How do I create my first appointment?",
     answer:
-      "Create your customer account, choose a service category, select a preferred date and time slot, then submit your booking request in a few steps.",
+      "Create your account, choose a service category, select a preferred date and time slot, then submit your booking request in a few steps.",
   },
   {
     question: "Can I track my booking after confirmation?",
@@ -442,14 +442,25 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    if (!location.hash) return;
-    const sectionId = location.hash.replace("#", "");
+    const sectionId = location.pathname.replace("/", "").trim();
+    if (!sectionId) return;
+
+    const validSections = new Set([
+      "about",
+      "services",
+      "process",
+      "contact",
+      "faq",
+      "reviews",
+    ]);
+    if (!validSections.has(sectionId)) return;
+
     const section = document.getElementById(sectionId);
     if (!section) return;
     setTimeout(() => {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
-  }, [location.hash]);
+  }, [location.pathname]);
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll("[data-reveal]"));

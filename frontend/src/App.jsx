@@ -17,6 +17,12 @@ export default function App() {
     <Routes>
       {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/about" element={<LandingPage />} />
+      <Route path="/services" element={<LandingPage />} />
+      <Route path="/process" element={<LandingPage />} />
+      <Route path="/contact" element={<LandingPage />} />
+      <Route path="/faq" element={<LandingPage />} />
+      <Route path="/reviews" element={<LandingPage />} />
       <Route path="/track-booking" element={<TrackBookingPage />} />
       <Route path="/customer/auth" element={<CustomerAuthPage />} />
       <Route path="/admin" element={<AdminAccessPage />} />

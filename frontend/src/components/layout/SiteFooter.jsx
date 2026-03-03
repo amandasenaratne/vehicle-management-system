@@ -17,18 +17,18 @@ export default function SiteFooter() {
         <div className="text-center">
           <p className="text-sm font-semibold text-slate-900">Quick Links</p>
           <div className="mt-3 space-y-2 text-sm">
-            <a href="/#about" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link to="/about" className="block text-slate-600 transition-colors hover:text-slate-900">
               About
-            </a>
-            <a href="/#services" className="block text-slate-600 transition-colors hover:text-slate-900">
+            </Link>
+            <Link to="/services" className="block text-slate-600 transition-colors hover:text-slate-900">
               Services
-            </a>
-            <a href="/#process" className="block text-slate-600 transition-colors hover:text-slate-900">
+            </Link>
+            <Link to="/process" className="block text-slate-600 transition-colors hover:text-slate-900">
               Process
-            </a>
-            <a href="/#contact" className="block text-slate-600 transition-colors hover:text-slate-900">
+            </Link>
+            <Link to="/contact" className="block text-slate-600 transition-colors hover:text-slate-900">
               Contact
-            </a>
+            </Link>
           </div>
         </div>
 

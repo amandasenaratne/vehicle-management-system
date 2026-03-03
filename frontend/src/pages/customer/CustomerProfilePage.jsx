@@ -22,7 +22,7 @@ export default function CustomerProfilePage() {
             </span>
             <div>
               <h2 className="text-2xl font-bold text-slate-900">{displayName}</h2>
-              <p className="text-sm text-slate-600">Customer Account</p>
+              <p className="text-sm text-slate-600">My Account</p>
             </div>
           </div>
 
