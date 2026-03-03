@@ -107,6 +107,7 @@ export default function TrackBookingPage() {
         { label: "Phone", value: result.phone },
         { label: "Vehicle Number", value: result.vehicleNumber },
         { label: "Service Type", value: result.serviceType },
+        { label: "Description", value: result.notes?.trim() || "No description provided" },
         { label: "Date", value: result.date },
         { label: "Time", value: result.time },
       ]

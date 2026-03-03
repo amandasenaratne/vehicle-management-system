@@ -327,6 +327,12 @@ export default function CustomerPortalPage() {
                         <p className="text-xs text-slate-500">Booking ID</p>
                         <p className="font-mono text-xs font-semibold text-slate-700">{booking.id}</p>
                       </div>
+                      <div className="sm:col-span-2">
+                        <p className="text-xs text-slate-500">Description</p>
+                        <p className="text-sm font-medium text-slate-700">
+                          {booking.notes?.trim() || "No description provided"}
+                        </p>
+                      </div>
                     </div>
                     <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-200 pt-3">
                       <p className="text-xs text-slate-500">{cancelState.helperText}</p>
