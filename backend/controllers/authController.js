@@ -18,10 +18,18 @@ const toUserPayload = (user) => ({
 // @access  Public
 const login = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
-    const normalizedUsername = username.trim();
+    const { username, email, password } = req.body;
+    const identifier = (email || username || "").trim().toLowerCase();
 
-    const user = await prisma.user.findUnique({ where: { username: normalizedUsername } });
+    if (!identifier) {
+      return res.status(400).json({ success: false, message: "Email or username is required" });
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ username: identifier }, { email: identifier }],
+      },
+    });
 
     if (!user || user.role !== "admin" || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ success: false, message: "Invalid username or password" });

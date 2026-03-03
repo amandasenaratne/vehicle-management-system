@@ -9,8 +9,13 @@ const router = Router();
 router.post(
   "/login",
   [
-    body("username").trim().notEmpty().withMessage("Username is required"),
     body("password").notEmpty().withMessage("Password is required"),
+    body().custom((value) => {
+      if (!value?.username && !value?.email) {
+        throw new Error("Email or username is required");
+      }
+      return true;
+    }),
   ],
   validate,
   login
