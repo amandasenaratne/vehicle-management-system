@@ -1,6 +1,6 @@
 import Badge from "../ui/Badge.jsx";
 
-const STATUS_OPTIONS = ["Pending", "Approved", "Completed", "Rejected"];
+const STATUS_OPTIONS = ["Pending", "Approved", "Completed", "Rejected", "Cancelled"];
 
 export default function BookingTable({ bookings, onStatusChange, onDelete, loading }) {
   if (loading) {

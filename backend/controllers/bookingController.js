@@ -1,6 +1,7 @@
 import prisma from "../config/db.js";
 
-const VALID_STATUSES = ["Pending", "Approved", "Completed", "Rejected"];
+const VALID_STATUSES = ["Pending", "Approved", "Completed", "Rejected", "Cancelled"];
+const CUSTOMER_CANCELABLE_STATUSES = ["Pending", "Approved"];
 
 // @desc    Create a new booking
 // @route   POST /api/bookings
@@ -93,6 +94,46 @@ const getAllBookings = async (req, res, next) => {
   }
 };
 
+// @desc    Cancel booking for logged in customer
+// @route   PUT /api/bookings/:id/cancel
+// @access  Private (Customer)
+const cancelMyBooking = async (req, res, next) => {
+  try {
+    const booking = await prisma.booking.findUnique({
+      where: { id: req.params.id },
+      select: { id: true, userId: true, status: true },
+    });
+
+    if (!booking) {
+      return res.status(404).json({ success: false, message: "Booking not found" });
+    }
+
+    if (booking.userId !== req.user.id) {
+      return res.status(403).json({ success: false, message: "You can only cancel your own bookings" });
+    }
+
+    if (!CUSTOMER_CANCELABLE_STATUSES.includes(booking.status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Only pending or approved bookings can be cancelled",
+      });
+    }
+
+    const updated = await prisma.booking.update({
+      where: { id: req.params.id },
+      data: { status: "Cancelled" },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Booking cancelled successfully",
+      data: updated,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Get single booking by ID
 // @route   GET /api/bookings/:id
 // @access  Private (Admin)
@@ -169,19 +210,28 @@ const getDashboardStats = async (req, res, next) => {
   try {
     const today = new Date().toISOString().split("T")[0];
 
-    const [total, pending, approved, completed, rejected, todayBookings] =
+    const [total, pending, approved, completed, rejected, cancelled, todayBookings] =
       await prisma.$transaction([
         prisma.booking.count(),
         prisma.booking.count({ where: { status: "Pending" } }),
         prisma.booking.count({ where: { status: "Approved" } }),
         prisma.booking.count({ where: { status: "Completed" } }),
         prisma.booking.count({ where: { status: "Rejected" } }),
+        prisma.booking.count({ where: { status: "Cancelled" } }),
         prisma.booking.count({ where: { date: today } }),
       ]);
 
     res.status(200).json({
       success: true,
-      data: { total, pending, approved, completed, rejected, todayBookings },
+      data: {
+        total,
+        pending,
+        approved,
+        completed,
+        rejected,
+        cancelled,
+        todayBookings,
+      },
     });
   } catch (error) {
     next(error);
@@ -271,6 +321,7 @@ const lookupBooking = async (req, res, next) => {
 export {
   createBooking,
   getMyBookings,
+  cancelMyBooking,
   getAllBookings,
   getBookingById,
   updateBookingStatus,

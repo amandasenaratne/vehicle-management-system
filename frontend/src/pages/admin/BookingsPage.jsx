@@ -5,7 +5,7 @@ import BookingTable from "../../components/bookings/BookingTable.jsx";
 import AdminLayout from "../../components/layout/AdminLayout.jsx";
 import useAuth from "../../hooks/useAuth.js";
 
-const STATUS_FILTERS = ["All", "Pending", "Approved", "Completed", "Rejected"];
+const STATUS_FILTERS = ["All", "Pending", "Approved", "Completed", "Rejected", "Cancelled"];
 
 export default function BookingsPage() {
   const { getAuthConfig } = useAuth();

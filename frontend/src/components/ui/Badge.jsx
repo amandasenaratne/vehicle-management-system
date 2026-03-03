@@ -3,6 +3,7 @@ const statusStyles = {
   Approved: "border-blue-200 bg-blue-50 text-blue-800",
   Completed: "border-emerald-200 bg-emerald-50 text-emerald-800",
   Rejected: "border-rose-200 bg-rose-50 text-rose-800",
+  Cancelled: "border-slate-300 bg-slate-100 text-slate-700",
 };
 
 const statusDotStyles = {
@@ -10,6 +11,7 @@ const statusDotStyles = {
   Approved: "bg-blue-500",
   Completed: "bg-emerald-500",
   Rejected: "bg-rose-500",
+  Cancelled: "bg-slate-500",
 };
 
 export default function Badge({ status }) {

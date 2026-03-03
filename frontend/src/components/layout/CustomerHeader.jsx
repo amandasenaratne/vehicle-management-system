@@ -14,7 +14,7 @@ const LANDING_PATHS = ["/", "/about", "/services", "/process", "/contact", "/faq
 function BrandMark() {
   return (
     <span className="inline-flex h-10 w-10 items-center justify-center overflow-hidden">
-      <img src="/imgs/logo.png" alt="AutoService Center logo" className="h-full w-full object-cover" />
+      <img src="/imgs/logo.png" alt="Axis AutoCare logo" className="h-full w-full object-cover" />
     </span>
   );
 }
@@ -183,16 +183,16 @@ export default function CustomerHeader({ active }) {
             to="/"
             onClick={handleBrandClick}
             style={{ transitionDelay: "60ms" }}
-            className={`flex items-center gap-3 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            className={`flex min-w-0 items-center gap-2 sm:gap-3 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
               navItemsVisible ? "opacity-100" : "opacity-0"
             }`}
           >
             <BrandMark />
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-slate-900 xl:text-xl">
-                AutoService Center
+            <div className="min-w-0">
+              <h1 className="truncate text-[0.95rem] font-bold leading-tight text-slate-900 sm:text-lg xl:text-xl">
+                Axis AutoCare
               </h1>
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              <p className="truncate text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-slate-500 sm:text-xs">
                 Vehicle Management System
               </p>
             </div>

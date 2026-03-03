@@ -7,7 +7,7 @@ export default function SiteFooter() {
     <footer className="border-t border-slate-200/80 bg-transparent text-slate-600">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr_0.9fr_0.9fr] lg:py-14">
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">AutoService Center</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Axis AutoCare</p>
           <h3 className="mt-2 text-xl font-bold text-slate-900">Premium Vehicle Service Operations</h3>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-slate-600">
             diagnostics and maintenance workflows with transparent booking and service tracking.
@@ -62,7 +62,7 @@ export default function SiteFooter() {
 
       <div className="border-t border-slate-200/80">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-center gap-2 px-4 py-4 text-xs text-slate-500 sm:justify-between sm:px-6">
-          <p>(c) {year} AutoService Center. All rights reserved.</p>
+          <p>(c) {year} Axis AutoCare Center. All rights reserved.</p>
           <p>Vehicle Management System</p>
         </div>
       </div>

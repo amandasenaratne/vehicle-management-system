@@ -554,7 +554,7 @@ export default function LandingPage() {
             data-reveal
             className="mx-auto mt-4 max-w-5xl text-[clamp(2.2rem,6vw,4.9rem)] font-extrabold leading-[1.06] text-slate-900"
           >
-            Premium Vehicle Service Management
+            Service That Matches Your Standards
           </h2>
           <p
             data-reveal
@@ -565,7 +565,7 @@ export default function LandingPage() {
           </p>
           <div data-reveal className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to="/customer/auth" className="btn-primary px-6 py-3">
-              Create Account
+              Sign Up
             </Link>
             <Link to="/track-booking" className="btn-secondary px-6 py-3">
               Track Existing Booking
@@ -640,10 +640,10 @@ export default function LandingPage() {
               </div>
 
               <p className="mt-10 text-base leading-8 text-slate-600">
-                AutoService Center operates as a modern vehicle service partner
-                focused on consistency, transparency, and delivery discipline.
-                Our goal is to turn traditional workshop operations into a
-                clear, trackable customer experience where every booking,
+                Axis AutoCare Center operates as a modern vehicle service
+                partner focused on consistency, transparency, and delivery
+                discipline. Our goal is to turn traditional workshop operations
+                into a clear, trackable customer experience where every booking,
                 update, and final handover is visible and dependable.
               </p>
               <p className="mt-6 text-base leading-8 text-slate-600">
@@ -679,14 +679,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section
-          id="services"
-          className="scroll-mt-24 py-16 lg:py-20"
-        >
-          <div
-            data-reveal
-            className="mx-auto w-full max-w-7xl px-4 sm:px-6"
-          >
+        <section id="services" className="scroll-mt-24 py-16 lg:py-20">
+          <div data-reveal className="mx-auto w-full max-w-7xl px-4 sm:px-6">
             <div className="text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
                 Services
@@ -701,7 +695,6 @@ export default function LandingPage() {
             </div>
 
             <div className="surface-card mt-10 px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
-
               <div
                 className="relative"
                 onMouseEnter={() => setIsCarouselPaused(true)}
@@ -777,7 +770,9 @@ export default function LandingPage() {
                     key={index}
                     type="button"
                     onClick={() =>
-                      setSlideIndex(Math.min(index * cardsPerView, maxSlideIndex))
+                      setSlideIndex(
+                        Math.min(index * cardsPerView, maxSlideIndex),
+                      )
                     }
                     className={`h-2.5 rounded-full transition-all ${
                       activePage === index
@@ -851,7 +846,11 @@ export default function LandingPage() {
                     </article>
                     {index < process.length - 1 ? (
                       <div className="my-2 flex justify-center text-blue-400/90">
-                        <svg viewBox="0 0 24 32" className="h-8 w-8" fill="none">
+                        <svg
+                          viewBox="0 0 24 32"
+                          className="h-8 w-8"
+                          fill="none"
+                        >
                           <path
                             d="M12 2v11h6v8"
                             stroke="currentColor"
@@ -906,7 +905,11 @@ export default function LandingPage() {
                     </article>
                     {index < process.length - 1 ? (
                       <div className="hidden md:flex items-center justify-center text-blue-400/90">
-                        <svg viewBox="0 0 72 40" className="h-10 w-[72px]" fill="none">
+                        <svg
+                          viewBox="0 0 72 40"
+                          className="h-10 w-[72px]"
+                          fill="none"
+                        >
                           <path
                             d={
                               index === 0

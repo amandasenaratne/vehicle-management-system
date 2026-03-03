@@ -14,6 +14,8 @@ const initialForm = {
   notes: "",
 };
 
+const CANCELABLE_STATUSES = new Set(["Pending", "Approved"]);
+
 export default function CustomerPortalPage() {
   const { customerUser, getAuthConfig } = useAuth();
   const [form, setForm] = useState(initialForm);
@@ -21,6 +23,7 @@ export default function CustomerPortalPage() {
   const [bookings, setBookings] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [cancellingId, setCancellingId] = useState("");
 
   const loadBookings = async () => {
     setLoadingHistory(true);
@@ -83,6 +86,67 @@ export default function CustomerPortalPage() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleCancelBooking = async (booking) => {
+    const canCancel = CANCELABLE_STATUSES.has(booking.status);
+    if (!canCancel) {
+      toast.error("Only pending or approved bookings can be cancelled");
+      return;
+    }
+
+    if (!window.confirm("Cancel this booking request?")) return;
+
+    setCancellingId(booking.id);
+    try {
+      await axiosInstance.put(`/bookings/${booking.id}/cancel`, {}, getAuthConfig("customer"));
+      toast.success("Booking cancelled");
+      await loadBookings();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to cancel booking");
+    } finally {
+      setCancellingId("");
+    }
+  };
+
+  const getCancellationState = (status) => {
+    if (CANCELABLE_STATUSES.has(status)) {
+      return {
+        canCancel: true,
+        helperText: "You can cancel this request before final completion.",
+        buttonLabel: "Cancel Booking",
+      };
+    }
+
+    if (status === "Cancelled") {
+      return {
+        canCancel: false,
+        helperText: "This booking has been cancelled and is no longer active.",
+        buttonLabel: "Cancelled",
+      };
+    }
+
+    if (status === "Completed") {
+      return {
+        canCancel: false,
+        helperText: "This booking is completed and closed.",
+        buttonLabel: "Completed",
+      };
+    }
+
+    if (status === "Rejected") {
+      return {
+        canCancel: false,
+        helperText: "This booking request was declined by the service desk.",
+        buttonLabel: "Rejected",
+      };
+    }
+
+    return {
+      canCancel: false,
+      helperText: "This booking is not eligible for cancellation.",
+      buttonLabel: "Unavailable",
+    };
   };
 
   return (
@@ -238,8 +302,12 @@ export default function CustomerPortalPage() {
               </div>
             ) : bookings.length ? (
               <div className="max-h-[720px] space-y-3 overflow-y-auto p-5">
-                {bookings.map((booking) => (
-                  <div key={booking.id} className="surface-muted p-4">
+                {bookings.map((booking) => {
+                  const cancelState = getCancellationState(booking.status);
+                  const isCancelling = cancellingId === booking.id;
+
+                  return (
+                    <div key={booking.id} className="surface-muted p-4">
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <p className="text-sm font-bold text-slate-900">{booking.serviceType}</p>
                       <Badge status={booking.status} />
@@ -260,8 +328,24 @@ export default function CustomerPortalPage() {
                         <p className="font-mono text-xs font-semibold text-slate-700">{booking.id}</p>
                       </div>
                     </div>
-                  </div>
-                ))}
+                    <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-200 pt-3">
+                      <p className="text-xs text-slate-500">{cancelState.helperText}</p>
+                      <button
+                        type="button"
+                        onClick={() => handleCancelBooking(booking)}
+                        disabled={!cancelState.canCancel || isCancelling}
+                        className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+                          cancelState.canCancel
+                            ? "border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100"
+                            : "cursor-not-allowed border border-slate-200 bg-slate-100 text-slate-400"
+                        }`}
+                      >
+                        {isCancelling ? "Cancelling..." : cancelState.buttonLabel}
+                      </button>
+                    </div>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <div className="p-10 text-center">

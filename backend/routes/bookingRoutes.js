@@ -3,6 +3,7 @@ import { body } from "express-validator";
 import {
   createBooking,
   getMyBookings,
+  cancelMyBooking,
   getAllBookings,
   getBookingById,
   updateBookingStatus,
@@ -37,6 +38,7 @@ const bookingValidation = [
 router.get("/stats", protect, authorize("admin"), getDashboardStats);
 router.post("/", protect, authorize("customer"), bookingValidation, validate, createBooking);
 router.get("/mine", protect, authorize("customer"), getMyBookings);
+router.put("/:id/cancel", protect, authorize("customer"), cancelMyBooking);
 router.get("/", protect, authorize("admin"), getAllBookings);
 router.get("/:id", protect, authorize("admin"), getBookingById);
 router.put(
