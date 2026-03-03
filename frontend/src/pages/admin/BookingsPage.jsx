@@ -3,10 +3,12 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../api/axiosInstance.js";
 import BookingTable from "../../components/bookings/BookingTable.jsx";
 import AdminLayout from "../../components/layout/AdminLayout.jsx";
+import useAuth from "../../hooks/useAuth.js";
 
 const STATUS_FILTERS = ["All", "Pending", "Approved", "Completed", "Rejected"];
 
 export default function BookingsPage() {
+  const { getAuthConfig } = useAuth();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ status: "All", date: "" });
@@ -19,7 +21,7 @@ export default function BookingsPage() {
       if (filters.status !== "All") params.status = filters.status;
       if (filters.date) params.date = filters.date;
 
-      const { data } = await axiosInstance.get("/bookings", { params });
+      const { data } = await axiosInstance.get("/bookings", { params, ...getAuthConfig("admin") });
       setBookings(data.data);
       setPagination((previous) => ({
         ...previous,
@@ -31,7 +33,7 @@ export default function BookingsPage() {
     } finally {
       setLoading(false);
     }
-  }, [filters, pagination.page]);
+  }, [filters, pagination.page, getAuthConfig]);
 
   useEffect(() => {
     fetchBookings();
@@ -39,7 +41,7 @@ export default function BookingsPage() {
 
   const handleStatusChange = async (id, status) => {
     try {
-      await axiosInstance.put(`/bookings/${id}/status`, { status });
+      await axiosInstance.put(`/bookings/${id}/status`, { status }, getAuthConfig("admin"));
       toast.success(`Status updated to ${status}`);
       fetchBookings();
     } catch {
@@ -50,7 +52,7 @@ export default function BookingsPage() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this booking?")) return;
     try {
-      await axiosInstance.delete(`/bookings/${id}`);
+      await axiosInstance.delete(`/bookings/${id}`, getAuthConfig("admin"));
       toast.success("Booking deleted");
       fetchBookings();
     } catch {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth.js";
 
@@ -15,8 +15,12 @@ function ShieldIcon() {
 export default function LoginPage() {
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { adminUser, login } = useAuth();
   const navigate = useNavigate();
+
+  if (adminUser) {
+    return <Navigate to="/admin/dashboard" replace />;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();

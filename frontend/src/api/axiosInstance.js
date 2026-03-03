@@ -9,13 +9,7 @@ const axiosInstance = axios.create({
 // Response interceptor for global error handling
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("adminUser");
-      window.location.href = "/admin/login";
-    }
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;

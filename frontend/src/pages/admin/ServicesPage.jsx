@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../api/axiosInstance.js";
 import AdminLayout from "../../components/layout/AdminLayout.jsx";
 import Modal from "../../components/ui/Modal.jsx";
+import useAuth from "../../hooks/useAuth.js";
 
 function WrenchIcon() {
   return (
@@ -21,6 +22,7 @@ function TrashIcon() {
 }
 
 export default function ServicesPage() {
+  const { getAuthConfig } = useAuth();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,7 +54,7 @@ export default function ServicesPage() {
 
     setSubmitting(true);
     try {
-      await axiosInstance.post("/services", form);
+      await axiosInstance.post("/services", form, getAuthConfig("admin"));
       toast.success("Service created successfully");
       setForm({ name: "", description: "" });
       setIsModalOpen(false);
@@ -67,7 +69,7 @@ export default function ServicesPage() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this service?")) return;
     try {
-      await axiosInstance.delete(`/services/${id}`);
+      await axiosInstance.delete(`/services/${id}`, getAuthConfig("admin"));
       toast.success("Service deleted");
       fetchServices();
     } catch {

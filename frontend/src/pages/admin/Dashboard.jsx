@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../api/axiosInstance.js";
 import AdminLayout from "../../components/layout/AdminLayout.jsx";
 import StatCard from "../../components/ui/StatCard.jsx";
+import useAuth from "../../hooks/useAuth.js";
 
 function TotalIcon() {
   return (
@@ -55,13 +56,14 @@ function TodayIcon() {
 }
 
 export default function Dashboard() {
+  const { getAuthConfig } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const { data } = await axiosInstance.get("/bookings/stats");
+        const { data } = await axiosInstance.get("/bookings/stats", getAuthConfig("admin"));
         setStats(data.data);
       } catch {
         toast.error("Failed to load dashboard stats");
@@ -71,7 +73,7 @@ export default function Dashboard() {
     };
 
     fetchStats();
-  }, []);
+  }, [getAuthConfig]);
 
   const cards = useMemo(() => {
     if (!stats) return [];

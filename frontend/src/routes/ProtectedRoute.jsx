@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth.js";
 
 export default function ProtectedRoute() {
-  const { user, loading } = useAuth();
+  const { adminUser, loading } = useAuth();
 
   if (loading) {
     return (
@@ -12,5 +12,5 @@ export default function ProtectedRoute() {
     );
   }
 
-  return user ? <Outlet /> : <Navigate to="/admin/login" replace />;
+  return adminUser ? <Outlet /> : <Navigate to="/admin/login" replace />;
 }
