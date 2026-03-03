@@ -182,7 +182,13 @@ export default function CustomerAuthPage() {
               </button>
             </div>
 
-            <div className="relative min-h-[260px] sm:min-h-[318px]">
+            <div
+              className={`relative ${
+                mode === "signup"
+                  ? "min-h-[340px] sm:min-h-[332px]"
+                  : "min-h-[270px] sm:min-h-[318px]"
+              }`}
+            >
               <form
                 onSubmit={handleLogin}
                 className={`absolute inset-0 space-y-4 transition-all duration-450 ease-[cubic-bezier(0.22,1,0.36,1)] ${

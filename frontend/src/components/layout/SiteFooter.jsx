@@ -4,29 +4,47 @@ export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-slate-200/80 bg-transparent text-slate-600">
+    <footer className="border-t border-slate-300/80 bg-transparent text-slate-600 ">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr_0.9fr_0.9fr] lg:py-14">
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Axis AutoCare</p>
-          <h3 className="mt-2 text-xl font-bold text-slate-900">Premium Vehicle Service Operations</h3>
+          <h3 className="mt-2 text-xl font-bold text-slate-900 pb-3 ">
+            Axis AutoCare
+          </h3>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+            {" "}
+            Premium Vehicle Service Operations
+          </p>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-slate-600">
-            diagnostics and maintenance workflows with transparent booking and service tracking.
+            diagnostics and maintenance workflows with transparent booking and
+            service tracking.
           </p>
         </div>
 
         <div className="text-center">
           <p className="text-sm font-semibold text-slate-900">Quick Links</p>
           <div className="mt-3 space-y-2 text-sm">
-            <Link to="/about" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link
+              to="/about"
+              className="block text-slate-600 transition-colors hover:text-slate-900"
+            >
               About
             </Link>
-            <Link to="/services" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link
+              to="/services"
+              className="block text-slate-600 transition-colors hover:text-slate-900"
+            >
               Services
             </Link>
-            <Link to="/process" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link
+              to="/process"
+              className="block text-slate-600 transition-colors hover:text-slate-900"
+            >
               Process
             </Link>
-            <Link to="/contact" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link
+              to="/contact"
+              className="block text-slate-600 transition-colors hover:text-slate-900"
+            >
               Contact
             </Link>
           </div>
@@ -35,13 +53,22 @@ export default function SiteFooter() {
         <div className="text-center">
           <p className="text-sm font-semibold text-slate-900">Customer</p>
           <div className="mt-3 space-y-2 text-sm">
-            <Link to="/customer/auth" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link
+              to="/customer/auth"
+              className="block text-slate-600 transition-colors hover:text-slate-900"
+            >
               Sign In / Register
             </Link>
-            <Link to="/track-booking" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link
+              to="/track-booking"
+              className="block text-slate-600 transition-colors hover:text-slate-900"
+            >
               Track Booking
             </Link>
-            <Link to="/customer/portal" className="block text-slate-600 transition-colors hover:text-slate-900">
+            <Link
+              to="/customer/portal"
+              className="block text-slate-600 transition-colors hover:text-slate-900"
+            >
               My Portal
             </Link>
           </div>
