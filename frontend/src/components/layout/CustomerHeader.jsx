@@ -297,8 +297,8 @@ export default function CustomerHeader({ active }) {
             aria-label="Close menu overlay"
           />
           <aside
-            className={`absolute bottom-0 left-0 top-0 w-[75vw] max-w-sm border-r border-slate-200 bg-white p-3 shadow-[0_30px_60px_-32px_rgba(15,23,42,0.7)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              mobileMenuOpen ? "translate-x-0" : "-translate-x-[105%]"
+            className={`absolute bottom-0 right-0 top-0 w-[75vw] max-w-sm border-l border-slate-200 bg-white p-3 shadow-[0_30px_60px_-32px_rgba(15,23,42,0.7)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              mobileMenuOpen ? "translate-x-0" : "translate-x-[105%]"
             }`}
           >
             <div className="mb-2 flex items-center justify-between border-b border-slate-200 px-1 pb-3">

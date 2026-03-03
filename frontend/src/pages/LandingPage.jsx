@@ -552,9 +552,12 @@ export default function LandingPage() {
           </p>
           <h2
             data-reveal
-            className="mx-auto mt-4 max-w-5xl text-[clamp(2.2rem,6vw,4.9rem)] font-extrabold leading-[1.06] text-slate-900"
+            className="mx-auto mt-4 max-w-5xl text-[1.75rem] font-extrabold leading-[1.12] text-slate-900 sm:text-[clamp(2.5rem,6vw,4.9rem)] sm:leading-[1.06]"
           >
-            Service That Matches Your Standards
+            Service That Matches
+            <br className="sm:hidden" />
+            <span className="hidden sm:inline"> </span>
+            Your Standards
           </h2>
           <p
             data-reveal
