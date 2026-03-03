@@ -85,9 +85,8 @@ export default function SiteFooter() {
       </div>
 
       <div className="border-t border-slate-200/80">
-        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-center gap-2 px-4 py-4 text-xs text-slate-500 sm:justify-between sm:px-6">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-center gap-2 px-4 py-4 text-sm text-slate-500 sm:justify-center sm:px-6">
           <p>(c) {year} Axis AutoCare Center. All rights reserved.</p>
-          <p>Vehicle Management System</p>
         </div>
       </div>
     </footer>
