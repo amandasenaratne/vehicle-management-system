@@ -312,7 +312,7 @@ function useCountUp(target, duration = 1700) {
   return count;
 }
 
-function AnimatedMetric({ label, value, decimals = 0, suffix = "" }) {
+function AnimatedMetric({ label, value, decimals = 0, suffix = "", Icon }) {
   const animated = useCountUp(value);
   const rounded = Number(animated.toFixed(decimals));
   const formatted = new Intl.NumberFormat("en-US", {
@@ -323,12 +323,17 @@ function AnimatedMetric({ label, value, decimals = 0, suffix = "" }) {
   return (
     <div
       data-reveal
-      className="rounded-2xl border border-slate-200 bg-white/75 px-5 py-4 text-center shadow-[0_18px_38px_-30px_rgba(15,23,42,0.65)] backdrop-blur"
+      className="flex min-h-[132px] flex-col justify-center rounded-2xl border border-slate-200 bg-white/75 px-6 py-6 text-center shadow-[0_18px_38px_-30px_rgba(15,23,42,0.65)] backdrop-blur sm:px-7 sm:py-7"
     >
+      {Icon ? (
+        <span className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+          <Icon />
+        </span>
+      ) : null}
       <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
         {label}
       </p>
-      <p className="mt-2 text-3xl font-extrabold text-slate-900">
+      <p className="mt-3 text-3xl font-extrabold text-slate-900">
         {formatted}
         {suffix}
       </p>
@@ -463,19 +468,30 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-3">
-            <AnimatedMetric label="Years in Service" value={12} suffix="+" />
-            <AnimatedMetric label="Completed Jobs" value={18500} suffix="+" />
+          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-14">
+            <AnimatedMetric
+              label="Years in Service"
+              value={12}
+              suffix="+"
+              Icon={CalendarIcon}
+            />
+            <AnimatedMetric
+              label="Completed Jobs"
+              value={18500}
+              suffix="+"
+              Icon={ToolsIcon}
+            />
             <AnimatedMetric
               label="Customer Satisfaction"
               value={98.4}
               suffix="%"
               decimals={1}
+              Icon={ShieldCheckIcon}
             />
           </div>
           <p
             data-reveal
-            className="mx-auto mt-5 max-w-2xl text-sm text-slate-600"
+            className="mx-auto mt-8 max-w-2xl text-sm leading-7 text-slate-600"
           >
             Customer Portal Enabled. Log in to review booking history, dates,
             services, and current statuses.
@@ -484,17 +500,20 @@ export default function LandingPage() {
 
         <section
           id="about"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-20 pt-4 sm:px-6 lg:pb-28 lg:pt-6"
         >
-          <div className="surface-card p-8 sm:p-12 lg:p-16">
-            <div data-reveal className="mx-auto max-w-4xl text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-                About
-              </p>
-              <h3 className="mt-3 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
-                Trusted by Daily Drivers and Fleet Teams
-              </h3>
-              <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-14 lg:gap-6">
+          <div data-reveal className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+              About
+            </p>
+            <h3 className="mt-4 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
+              Trusted by Daily Drivers and Fleet Teams
+            </h3>
+          </div>
+
+          <div className="surface-card mt-10 p-10 sm:mt-12 sm:p-14 lg:p-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-3 lg:gap-7">
                 {[
                   { label: "Average Turnaround", value: "24-48 Hrs" },
                   { label: "Technician Team", value: "35+" },
@@ -516,14 +535,14 @@ export default function LandingPage() {
                 ))}
               </div>
 
-              <p className="mt-7 text-base leading-8 text-slate-600">
+              <p className="mt-10 text-base leading-8 text-slate-600">
                 AutoService Center operates as a modern vehicle service partner
                 focused on consistency, transparency, and delivery discipline.
                 Our goal is to turn traditional workshop operations into a
                 clear, trackable customer experience where every booking,
                 update, and final handover is visible and dependable.
               </p>
-              <p className="mt-5 text-base leading-8 text-slate-600">
+              <p className="mt-6 text-base leading-8 text-slate-600">
                 We serve both individual vehicle owners and operational fleets
                 with structured service workflows, experienced technicians, and
                 measurable quality controls. From preventive maintenance to
@@ -533,7 +552,7 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3 lg:mt-14 lg:gap-7">
+            <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3 lg:mt-16 lg:gap-8">
               {aboutFeatures.map(({ title, description, Icon }, index) => (
                 <article
                   key={title}
@@ -679,25 +698,26 @@ export default function LandingPage() {
 
         <section
           id="process"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 lg:pb-20"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-2 sm:px-6 lg:pb-24 lg:pt-4"
         >
+          <div data-reveal className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              How It Works
+            </p>
+            <h3 className="mt-4 text-3xl font-bold text-slate-900">
+              Service Journey in Three Steps
+            </h3>
+            <p className="mt-5 text-base leading-8 text-slate-600">
+              A streamlined operational flow from customer onboarding to
+              real-time tracking and final service completion.
+            </p>
+          </div>
+
           <div
             data-reveal
-            className="surface-card overflow-hidden p-8 sm:p-10 lg:p-14"
+            className="surface-card mt-10 overflow-hidden p-10 sm:mt-12 sm:p-12 lg:p-16"
           >
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
-                How It Works
-              </p>
-              <h3 className="mt-3 text-3xl font-bold text-slate-900">
-                Service Journey in Three Steps
-              </h3>
-              <p className="mt-4 text-base leading-8 text-slate-600">
-                A streamlined operational flow from customer onboarding to
-                real-time tracking and final service completion.
-              </p>
-            </div>
-            <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3 lg:mt-12 lg:gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-7">
               {process.map((item, index) => (
                 <article
                   key={item.title}
@@ -744,44 +764,29 @@ export default function LandingPage() {
               </div>
 
               <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-12 lg:gap-6">
-                {contactChannels.map(({ label, title, detail, Icon }, index) => (
-                  <article
-                    key={label}
-                    data-reveal
-                    style={{ transitionDelay: `${index * 110}ms` }}
-                    className="h-full rounded-2xl border border-white/25 bg-white/10 p-5 text-center backdrop-blur lg:p-6"
-                  >
-                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white">
-                      <Icon />
-                    </span>
-                    <p className="mt-4 text-xs font-semibold uppercase tracking-[0.1em] text-blue-100">
-                      {label}
-                    </p>
-                    <p className="mt-2 text-sm font-bold text-white lg:text-base">
-                      {title}
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-blue-50/90">
-                      {detail}
-                    </p>
-                  </article>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/25 bg-white/10 p-5 backdrop-blur lg:mt-10 lg:p-6">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-100">
-                    Operations Access
-                  </p>
-                  <p className="mt-2 text-base font-semibold text-white">
-                    Staff or operations team?
-                  </p>
-                </div>
-                <Link
-                  to="/admin"
-                  className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition-colors duration-200 hover:bg-blue-50"
-                >
-                  Open Admin Access Portal
-                </Link>
+                {contactChannels.map(
+                  ({ label, title, detail, Icon }, index) => (
+                    <article
+                      key={label}
+                      data-reveal
+                      style={{ transitionDelay: `${index * 110}ms` }}
+                      className="h-full rounded-2xl border border-white/25 bg-white/10 p-5 text-center backdrop-blur lg:p-6"
+                    >
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white">
+                        <Icon />
+                      </span>
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.1em] text-blue-100">
+                        {label}
+                      </p>
+                      <p className="mt-2 text-sm font-bold text-white lg:text-base">
+                        {title}
+                      </p>
+                      <p className="mt-3 text-sm leading-7 text-blue-50/90">
+                        {detail}
+                      </p>
+                    </article>
+                  ),
+                )}
               </div>
             </div>
           </div>
