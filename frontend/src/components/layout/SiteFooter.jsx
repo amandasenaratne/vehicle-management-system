@@ -52,10 +52,7 @@ export default function SiteFooter() {
           <div className="mt-3 space-y-2 text-sm text-slate-600">
             <p>Colombo Workshop Hub</p>
             <p>+94 11 555 0190</p>
-            <p>support@autoservice.example</p>
-            <Link to="/admin" className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-slate-500 hover:text-slate-900">
-              Admin Access
-            </Link>
+            <p>support@axisautoservice.com</p>
           </div>
         </div>
       </div>
