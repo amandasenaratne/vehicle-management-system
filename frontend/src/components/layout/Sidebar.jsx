@@ -1,11 +1,45 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth.js";
 import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth.js";
+
+function DashboardIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="M3 13h8V3H3v10Zm10 8h8V3h-8v18ZM3 21h8v-6H3v6Z" />
+    </svg>
+  );
+}
+
+function BookingsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="M7 4h10l3 3v13H4V4h3Zm3 0v4h4V4" />
+      <path d="M8 12h8M8 16h6" />
+    </svg>
+  );
+}
+
+function ServicesIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="m14 7 3 3m-9 9-3-3m2-5 8-8 5 5-8 8H7v-5Z" />
+    </svg>
+  );
+}
+
+function LogoutIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="M10 17v2a2 2 0 0 0 2 2h7V3h-7a2 2 0 0 0-2 2v2" />
+      <path d="m15 12-4-4m4 4-4 4M3 12h12" />
+    </svg>
+  );
+}
 
 const navItems = [
-  { to: "/admin/dashboard", label: "Dashboard", icon: "📊" },
-  { to: "/admin/bookings", label: "Bookings", icon: "📋" },
-  { to: "/admin/services", label: "Services", icon: "🔧" },
+  { to: "/admin/dashboard", label: "Dashboard", caption: "Performance and trends", Icon: DashboardIcon },
+  { to: "/admin/bookings", label: "Bookings", caption: "Requests and statuses", Icon: BookingsIcon },
+  { to: "/admin/services", label: "Services", caption: "Service catalog", Icon: ServicesIcon },
 ];
 
 export default function Sidebar() {
@@ -19,30 +53,55 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 bg-gray-900 text-white min-h-screen flex flex-col">
-      <div className="p-6 border-b border-gray-700">
-        <h1 className="text-xl font-bold">🚗 AutoService</h1>
-        <p className="text-xs text-gray-400 mt-1">Admin Panel</p>
+    <aside className="flex min-h-screen w-20 flex-col border-r border-slate-800 bg-slate-950 text-slate-100 md:w-72">
+      <div className="border-b border-slate-800 p-4 md:p-6">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-500 text-white">
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M4 14h16" />
+              <path d="M6 14 8 8h8l2 6" />
+              <path d="M6.5 17a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm11 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+            </svg>
+          </span>
+          <div className="hidden md:block">
+            <h1 className="text-lg font-bold text-white">AutoService</h1>
+            <p className="text-xs text-slate-400">Enterprise Console</p>
+          </div>
+        </div>
       </div>
-      <nav className="flex-1 p-4 space-y-1">
-        {navItems.map(({ to, label, icon }) => (
+
+      <nav className="flex-1 space-y-1 p-3 md:p-4">
+        {navItems.map(({ to, label, caption, Icon }) => (
           <NavLink
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                isActive ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"
+              `group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition-colors ${
+                isActive ? "bg-slate-800 text-white shadow-inner" : "text-slate-300 hover:bg-slate-900 hover:text-white"
               }`
             }
+            title={label}
           >
-            <span>{icon}</span>
-            {label}
+            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-slate-200 group-hover:bg-slate-800">
+              <Icon />
+            </span>
+            <span className="hidden min-w-0 md:block">
+              <span className="block truncate">{label}</span>
+              <span className="block truncate text-xs font-medium text-slate-400">{caption}</span>
+            </span>
           </NavLink>
         ))}
       </nav>
-      <div className="p-4 border-t border-gray-700">
-        <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-gray-300 hover:bg-gray-700 transition-colors">
-          <span>🚪</span> Logout
+
+      <div className="border-t border-slate-800 p-3 md:p-4">
+        <button
+          onClick={handleLogout}
+          className="group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 transition-colors hover:bg-rose-950/40 hover:text-rose-100"
+        >
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-slate-300 group-hover:bg-rose-900/40">
+            <LogoutIcon />
+          </span>
+          <span className="hidden md:block">Logout</span>
         </button>
       </div>
     </aside>

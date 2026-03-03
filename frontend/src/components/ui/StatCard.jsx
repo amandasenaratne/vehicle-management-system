@@ -1,20 +1,20 @@
 export default function StatCard({ title, value, icon, color = "blue" }) {
   const colors = {
-    blue: "bg-blue-50 text-blue-600",
-    yellow: "bg-yellow-50 text-yellow-600",
-    green: "bg-green-50 text-green-600",
-    red: "bg-red-50 text-red-600",
-    purple: "bg-purple-50 text-purple-600",
+    blue: "bg-blue-100 text-blue-700",
+    yellow: "bg-amber-100 text-amber-700",
+    green: "bg-emerald-100 text-emerald-700",
+    red: "bg-rose-100 text-rose-700",
+    purple: "bg-violet-100 text-violet-700",
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div className="surface-card p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-500">{title}</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
+          <p className="text-sm font-semibold text-slate-500">{title}</p>
+          <p className="mt-2 text-3xl font-bold text-slate-900">{value}</p>
         </div>
-        <div className={`p-3 rounded-full text-2xl ${colors[color]}`}>{icon}</div>
+        <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${colors[color]}`}>{icon}</div>
       </div>
     </div>
   );

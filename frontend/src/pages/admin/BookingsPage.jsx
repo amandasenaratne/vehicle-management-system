@@ -1,9 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
-import Sidebar from "../../components/layout/Sidebar.jsx";
-import Navbar from "../../components/layout/Navbar.jsx";
-import BookingTable from "../../components/bookings/BookingTable.jsx";
-import axiosInstance from "../../api/axiosInstance.js";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import axiosInstance from "../../api/axiosInstance.js";
+import BookingTable from "../../components/bookings/BookingTable.jsx";
+import AdminLayout from "../../components/layout/AdminLayout.jsx";
 
 const STATUS_FILTERS = ["All", "Pending", "Approved", "Completed", "Rejected"];
 
@@ -11,7 +10,7 @@ export default function BookingsPage() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ status: "All", date: "" });
-  const [pagination, setPagination] = useState({ page: 1, pages: 1 });
+  const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
 
   const fetchBookings = useCallback(async () => {
     setLoading(true);
@@ -22,7 +21,11 @@ export default function BookingsPage() {
 
       const { data } = await axiosInstance.get("/bookings", { params });
       setBookings(data.data);
-      setPagination((p) => ({ ...p, pages: data.pagination.pages }));
+      setPagination((previous) => ({
+        ...previous,
+        pages: data.pagination.pages,
+        total: data.pagination.total,
+      }));
     } catch {
       toast.error("Failed to load bookings");
     } finally {
@@ -30,7 +33,9 @@ export default function BookingsPage() {
     }
   }, [filters, pagination.page]);
 
-  useEffect(() => { fetchBookings(); }, [fetchBookings]);
+  useEffect(() => {
+    fetchBookings();
+  }, [fetchBookings]);
 
   const handleStatusChange = async (id, status) => {
     try {
@@ -54,73 +59,100 @@ export default function BookingsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Navbar title="Bookings" />
-        <main className="flex-1 overflow-y-auto p-6">
-          {/* Filters */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6 flex flex-wrap gap-4 items-end">
-            <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
-              <select
-                value={filters.status}
-                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                className="input-field w-36"
-              >
-                {STATUS_FILTERS.map((s) => <option key={s}>{s}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Date</label>
-              <input
-                type="date"
-                value={filters.date}
-                onChange={(e) => setFilters({ ...filters, date: e.target.value })}
-                className="input-field w-40"
-              />
-            </div>
-            {(filters.status !== "All" || filters.date) && (
-              <button
-                onClick={() => setFilters({ status: "All", date: "" })}
-                className="btn-secondary text-sm"
-              >
-                Clear Filters
-              </button>
-            )}
+    <AdminLayout title="Bookings" subtitle="Filter and manage incoming service requests">
+      <section className="surface-card mb-6 p-5">
+        <div className="panel-header mb-4">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">Filters</h3>
+            <p className="text-sm text-slate-600">Narrow down by current status or preferred date.</p>
           </div>
+          {(filters.status !== "All" || filters.date) && (
+            <button
+              type="button"
+              onClick={() => {
+                setFilters({ status: "All", date: "" });
+                setPagination((previous) => ({ ...previous, page: 1 }));
+              }}
+              className="btn-secondary text-sm"
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
 
-          {/* Table */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <h3 className="font-semibold text-gray-800">All Bookings</h3>
-            </div>
-            <BookingTable
-              bookings={bookings}
-              onStatusChange={handleStatusChange}
-              onDelete={handleDelete}
-              loading={loading}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:max-w-lg">
+          <div>
+            <label htmlFor="statusFilter" className="mb-1.5 block text-sm font-semibold text-slate-700">
+              Status
+            </label>
+            <select
+              id="statusFilter"
+              value={filters.status}
+              onChange={(event) => {
+                setFilters((previous) => ({ ...previous, status: event.target.value }));
+                setPagination((previous) => ({ ...previous, page: 1 }));
+              }}
+              className="input-field"
+            >
+              {STATUS_FILTERS.map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="dateFilter" className="mb-1.5 block text-sm font-semibold text-slate-700">
+              Date
+            </label>
+            <input
+              id="dateFilter"
+              type="date"
+              value={filters.date}
+              onChange={(event) => {
+                setFilters((previous) => ({ ...previous, date: event.target.value }));
+                setPagination((previous) => ({ ...previous, page: 1 }));
+              }}
+              className="input-field"
             />
           </div>
+        </div>
+      </section>
 
-          {/* Pagination */}
-          {pagination.pages > 1 && (
-            <div className="flex justify-center gap-2 mt-6">
-              {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setPagination({ ...pagination, page: p })}
-                  className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                    p === pagination.page ? "bg-blue-600 text-white" : "bg-white text-gray-600 border hover:bg-gray-50"
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
-          )}
-        </main>
-      </div>
-    </div>
+      <section className="surface-card overflow-hidden">
+        <div className="border-b border-slate-200 px-5 py-4">
+          <h3 className="text-base font-bold text-slate-900">Booking Register</h3>
+          <p className="text-sm text-slate-600">
+            Showing page {pagination.page} of {pagination.pages} {pagination.total ? `(${pagination.total} total)` : ""}
+          </p>
+        </div>
+
+        <BookingTable
+          bookings={bookings}
+          onStatusChange={handleStatusChange}
+          onDelete={handleDelete}
+          loading={loading}
+        />
+      </section>
+
+      {pagination.pages > 1 ? (
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {Array.from({ length: pagination.pages }, (_, index) => index + 1).map((pageNo) => (
+            <button
+              key={pageNo}
+              type="button"
+              onClick={() => setPagination((previous) => ({ ...previous, page: pageNo }))}
+              className={`h-10 min-w-10 rounded-lg border px-3 text-sm font-semibold transition-colors ${
+                pageNo === pagination.page
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              {pageNo}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </AdminLayout>
   );
 }

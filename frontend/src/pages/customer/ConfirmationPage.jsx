@@ -1,5 +1,16 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Badge from "../../components/ui/Badge.jsx";
+import CustomerHeader from "../../components/layout/CustomerHeader.jsx";
+
+function SuccessIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10" />
+      <path d="m8 12 3 3 5-6" />
+    </svg>
+  );
+}
 
 export default function ConfirmationPage() {
   const { state } = useLocation();
@@ -7,21 +18,20 @@ export default function ConfirmationPage() {
   const booking = state?.booking;
 
   if (!booking) {
-    navigate("/");
-    return null;
+    return <Navigate to="/" replace />;
   }
 
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(booking.id);
-      toast.success("Booking ID copied to clipboard");
+      toast.success("Booking ID copied");
     } catch {
       toast.error("Failed to copy Booking ID");
     }
   };
 
   const details = [
-    { label: "Booking ID", value: booking.id },
+    { label: "Booking ID", value: booking.id, copy: true },
     { label: "Customer Name", value: booking.customerName },
     { label: "Phone", value: booking.phone },
     { label: "Vehicle Number", value: booking.vehicleNumber },
@@ -31,69 +41,54 @@ export default function ConfirmationPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-8 text-center">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-          ✅
-        </div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Booking Confirmed!
-        </h1>
-        <p className="text-gray-500 mb-6">
-          We've received your request. Our team will contact you shortly.
-        </p>
+    <div className="min-h-screen">
+      <CustomerHeader />
 
-        <div className="bg-gray-50 rounded-xl p-5 text-left space-y-3 mb-4">
-          {details.map(({ label, value }) => (
-            <div
-              key={label}
-              className="flex justify-between items-center gap-3 text-sm"
-            >
-              <span className="text-gray-500">{label}</span>
-
-              {label === "Booking ID" ? (
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-gray-900 text-xs md:text-sm">
-                    {value}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleCopyId}
-                    className="text-xs px-2 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
-                  >
-                    Copy
-                  </button>
-                </div>
-              ) : (
-                <span className="font-medium text-gray-900">{value}</span>
-              )}
-            </div>
-          ))}
-          <div className="flex justify-between text-sm pt-3 border-t">
-            <span className="text-gray-500">Status</span>
-            <span className="font-medium text-yellow-600 bg-yellow-100 px-2 py-0.5 rounded-full">
-              Pending
-            </span>
+      <main className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 lg:py-12">
+        <section className="surface-card p-6 text-center sm:p-8">
+          <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+            <SuccessIcon />
           </div>
-        </div>
+          <h2 className="mt-4 text-3xl font-bold text-slate-900">Booking Confirmed</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-slate-600">
+            Your request has been received successfully. Keep your booking reference to track updates later.
+          </p>
 
-        <p className="text-xs text-gray-400 mb-4">
-          Keep your Booking ID or vehicle number + phone to track your status
-          later.
-        </p>
-        <button
-          onClick={() => navigate("/")}
-          className="btn-primary w-full py-3"
-        >
-          Book Another Appointment
-        </button>
-        <button
-          onClick={() => navigate("/track-booking")}
-          className="btn-secondary w-full py-3 mt-2"
-        >
-          Track Your Booking
-        </button>
-      </div>
+          <div className="mt-8 space-y-3 text-left">
+            {details.map(({ label, value, copy }) => (
+              <div key={label} className="surface-muted flex items-center justify-between gap-3 p-3">
+                <span className="text-sm text-slate-500">{label}</span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm font-semibold text-slate-900 ${copy ? "font-mono" : ""}`}>{value}</span>
+                  {copy ? (
+                    <button type="button" onClick={handleCopyId} className="btn-secondary px-2.5 py-1.5 text-xs">
+                      Copy
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+            <div className="surface-muted flex items-center justify-between gap-3 p-3">
+              <span className="text-sm text-slate-500">Status</span>
+              <Badge status="Pending" />
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-xl border border-blue-100 bg-blue-50 p-4 text-left">
+            <p className="text-sm font-semibold text-blue-900">Next Step</p>
+            <p className="mt-1 text-sm text-blue-800">Use your booking ID or vehicle number and phone to monitor progress.</p>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <button type="button" onClick={() => navigate("/")} className="btn-primary py-3">
+              Book Another Service
+            </button>
+            <button type="button" onClick={() => navigate("/track-booking")} className="btn-secondary py-3">
+              Track This Booking
+            </button>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

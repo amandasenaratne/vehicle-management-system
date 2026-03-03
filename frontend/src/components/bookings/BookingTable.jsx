@@ -3,44 +3,68 @@ import Badge from "../ui/Badge.jsx";
 const STATUS_OPTIONS = ["Pending", "Approved", "Completed", "Rejected"];
 
 export default function BookingTable({ bookings, onStatusChange, onDelete, loading }) {
-  if (loading) return <div className="flex justify-center py-12"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center py-14">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600" />
+      </div>
+    );
+  }
 
-  if (!bookings.length) return <div className="text-center py-12 text-gray-500">No bookings found.</div>;
+  if (!bookings.length) {
+    return (
+      <div className="p-10 text-center">
+        <p className="text-base font-semibold text-slate-700">No bookings found</p>
+        <p className="mt-1 text-sm text-slate-500">Try adjusting the date or status filters.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+      <table className="data-table min-w-[980px] w-full">
+        <thead>
           <tr>
-            {["Customer", "Phone", "Vehicle", "Service", "Date", "Time", "Status", "Actions"].map((h) => (
-              <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                {h}
-              </th>
+            {["Customer", "Contact", "Vehicle", "Service", "Schedule", "Status", "Actions"].map((heading) => (
+              <th key={heading}>{heading}</th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white">
           {bookings.map((booking) => (
-            <tr key={booking.id} className="hover:bg-gray-50 transition-colors">
-              <td className="px-4 py-3 text-sm font-medium text-gray-900">{booking.customerName}</td>
-              <td className="px-4 py-3 text-sm text-gray-600">{booking.phone}</td>
-              <td className="px-4 py-3 text-sm text-gray-600">{booking.vehicleNumber}</td>
-              <td className="px-4 py-3 text-sm text-gray-600">{booking.serviceType}</td>
-              <td className="px-4 py-3 text-sm text-gray-600">{booking.date}</td>
-              <td className="px-4 py-3 text-sm text-gray-600">{booking.time}</td>
-              <td className="px-4 py-3"><Badge status={booking.status} /></td>
-              <td className="px-4 py-3">
+            <tr key={booking.id} className="transition-colors hover:bg-slate-50/80">
+              <td>
+                <p className="font-semibold text-slate-900">{booking.customerName}</p>
+                <p className="font-mono text-xs text-slate-500">{booking.id?.slice(0, 8)}</p>
+              </td>
+              <td className="text-slate-700">{booking.phone}</td>
+              <td className="font-semibold text-slate-700">{booking.vehicleNumber}</td>
+              <td className="text-slate-700">{booking.serviceType}</td>
+              <td>
+                <p className="font-semibold text-slate-900">{booking.date}</p>
+                <p className="text-xs text-slate-500">{booking.time}</p>
+              </td>
+              <td>
+                <Badge status={booking.status} />
+              </td>
+              <td>
                 <div className="flex items-center gap-2">
                   <select
                     value={booking.status}
-                    onChange={(e) => onStatusChange(booking.id, e.target.value)}
-                    className="text-xs border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    onChange={(event) => onStatusChange(booking.id, event.target.value)}
+                    className="input-field min-w-[138px] py-1.5 text-xs"
+                    aria-label="Update booking status"
                   >
-                    {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+                    {STATUS_OPTIONS.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
                   </select>
                   <button
+                    type="button"
                     onClick={() => onDelete(booking.id)}
-                    className="text-red-500 hover:text-red-700 text-xs font-medium transition-colors"
+                    className="btn-danger px-3 py-1.5 text-xs"
                   >
                     Delete
                   </button>
