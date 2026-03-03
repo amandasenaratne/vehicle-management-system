@@ -2,6 +2,7 @@ import { Router } from "express";
 import { body } from "express-validator";
 import {
   createBooking,
+  getMyBookings,
   getAllBookings,
   getBookingById,
   updateBookingStatus,
@@ -10,7 +11,7 @@ import {
   getPublicBookingById,
   lookupBooking,
 } from "../controllers/bookingController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { authorize, protect } from "../middleware/authMiddleware.js";
 import validate from "../middleware/validateMiddleware.js";
 
 const router = Router();
@@ -33,17 +34,19 @@ const bookingValidation = [
   body("time").trim().notEmpty().withMessage("Time is required"),
 ];
 
-router.get("/stats", protect, getDashboardStats);
-router.post("/", bookingValidation, validate, createBooking);
-router.get("/", protect, getAllBookings);
-router.get("/:id", protect, getBookingById);
+router.get("/stats", protect, authorize("admin"), getDashboardStats);
+router.post("/", protect, authorize("customer"), bookingValidation, validate, createBooking);
+router.get("/mine", protect, authorize("customer"), getMyBookings);
+router.get("/", protect, authorize("admin"), getAllBookings);
+router.get("/:id", protect, authorize("admin"), getBookingById);
 router.put(
   "/:id/status",
   protect,
+  authorize("admin"),
   body("status").notEmpty().withMessage("Status is required"),
   validate,
   updateBookingStatus,
 );
-router.delete("/:id", protect, deleteBooking);
+router.delete("/:id", protect, authorize("admin"), deleteBooking);
 
 export default router;

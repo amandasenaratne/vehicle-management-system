@@ -19,13 +19,14 @@ const createBooking = async (req, res, next) => {
 
     const booking = await prisma.booking.create({
       data: {
-        customerName,
+        customerName: customerName?.trim() || req.user?.name || req.user?.username || "Customer",
         phone,
         vehicleNumber,
         serviceType,
         date,
         time,
         notes,
+        userId: req.user.id,
       },
     });
 
@@ -34,6 +35,22 @@ const createBooking = async (req, res, next) => {
       message: "Booking created successfully",
       data: booking,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get bookings for logged in customer
+// @route   GET /api/bookings/mine
+// @access  Private (Customer)
+const getMyBookings = async (req, res, next) => {
+  try {
+    const bookings = await prisma.booking.findMany({
+      where: { userId: req.user.id },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.status(200).json({ success: true, data: bookings });
   } catch (error) {
     next(error);
   }
@@ -253,6 +270,7 @@ const lookupBooking = async (req, res, next) => {
 
 export {
   createBooking,
+  getMyBookings,
   getAllBookings,
   getBookingById,
   updateBookingStatus,

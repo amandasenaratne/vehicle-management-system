@@ -16,7 +16,7 @@ const protect = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await prisma.user.findUnique({
       where: { id: decoded.id },
-      select: { id: true, username: true, role: true },
+      select: { id: true, username: true, name: true, email: true, role: true },
     });
 
     if (!req.user) {
@@ -29,4 +29,16 @@ const protect = async (req, res, next) => {
   }
 };
 
-export { protect };
+const authorize = (...roles) => (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ success: false, message: "Not authorized" });
+  }
+
+  if (!roles.includes(req.user.role)) {
+    return res.status(403).json({ success: false, message: "Access denied" });
+  }
+
+  next();
+};
+
+export { protect, authorize };

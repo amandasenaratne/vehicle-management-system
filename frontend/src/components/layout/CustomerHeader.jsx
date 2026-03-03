@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.js";
 
 const LINKS = [
-  { to: "/", label: "Book Service", key: "book" },
+  { to: "/", label: "Home", key: "home" },
   { to: "/track-booking", label: "Track Booking", key: "track" },
+  { to: "/customer/portal", label: "My Portal", key: "portal" },
 ];
 
 function BrandMark() {
@@ -18,15 +20,16 @@ function BrandMark() {
 }
 
 export default function CustomerHeader({ active }) {
+  const navigate = useNavigate();
+  const { customerUser, logoutCustomer } = useAuth();
+
   return (
     <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link to="/" className="flex items-center gap-3">
           <BrandMark />
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
-              Vehicle Management System
-            </p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Vehicle Management System</p>
             <h1 className="text-lg font-bold text-slate-900">AutoService Center</h1>
           </div>
         </Link>
@@ -45,6 +48,27 @@ export default function CustomerHeader({ active }) {
               </Link>
             ))}
           </nav>
+          {customerUser ? (
+            <>
+              <span className="hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 sm:inline-flex">
+                {customerUser.name || customerUser.email}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  logoutCustomer();
+                  navigate("/customer/auth");
+                }}
+                className="btn-secondary text-sm"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/customer/auth" className="btn-primary text-sm">
+              Sign In
+            </Link>
+          )}
           <Link to="/admin/login" className="btn-secondary text-sm">
             Admin Sign In
           </Link>
