@@ -46,17 +46,24 @@ export default function CustomerHeader({ active }) {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (!LANDING_PATHS.includes(location.pathname)) return;
+    if (!LANDING_PATHS.includes(location.pathname)) {
+      setActiveSection("");
+      return;
+    }
     const sectionFromPath = location.pathname.replace("/", "").trim();
     if (SECTION_LINKS.some((item) => item.id === sectionFromPath)) {
       setActiveSection(sectionFromPath);
+      return;
+    }
+    if (location.pathname === "/") {
+      setActiveSection("");
       return;
     }
     if (SECTION_LINKS.some((item) => item.id === active)) {
       setActiveSection(active);
       return;
     }
-    setActiveSection("about");
+    setActiveSection("");
   }, [location.pathname, active]);
 
   useEffect(() => {
@@ -68,6 +75,10 @@ export default function CustomerHeader({ active }) {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (location.pathname === "/" && window.scrollY < 120) {
+          setActiveSection("");
+          return;
+        }
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
@@ -83,6 +94,18 @@ export default function CustomerHeader({ active }) {
 
     sectionElements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (location.pathname !== "/") return undefined;
+    const syncHomeState = () => {
+      if (window.scrollY < 120) {
+        setActiveSection("");
+      }
+    };
+    syncHomeState();
+    window.addEventListener("scroll", syncHomeState, { passive: true });
+    return () => window.removeEventListener("scroll", syncHomeState);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -166,7 +189,7 @@ export default function CustomerHeader({ active }) {
           >
             <BrandMark />
             <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-slate-900">
+              <h1 className="text-lg font-bold text-slate-900 xl:text-xl">
                 AutoService Center
               </h1>
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -182,7 +205,7 @@ export default function CustomerHeader({ active }) {
                 type="button"
                 onClick={() => handleSectionClick(item.id)}
                 style={{ transitionDelay: `${120 + index * 90}ms` }}
-                className={`text-sm font-semibold transition-colors ${
+                className={`text-[0.95rem] font-semibold transition-colors xl:text-base 2xl:text-[1.05rem] ${
                   activeSection === item.id
                     ? "text-slate-900"
                     : "text-slate-600 hover:text-slate-900"
@@ -221,7 +244,7 @@ export default function CustomerHeader({ active }) {
                 <div className="hidden items-center gap-4 border-r border-slate-300 pr-4 xl:flex">
                   <Link
                     to="/track-booking"
-                    className={`text-sm font-semibold transition-colors ${
+                    className={`text-[0.95rem] font-semibold transition-colors xl:text-base ${
                       active === "track"
                         ? "text-slate-900"
                         : "text-slate-600 hover:text-slate-900"
@@ -231,7 +254,7 @@ export default function CustomerHeader({ active }) {
                   </Link>
                   <Link
                     to="/customer/portal"
-                    className={`text-sm font-semibold transition-colors ${
+                    className={`text-[0.95rem] font-semibold transition-colors xl:text-base ${
                       active === "portal"
                         ? "text-slate-900"
                         : "text-slate-600 hover:text-slate-900"
@@ -249,10 +272,10 @@ export default function CustomerHeader({ active }) {
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-blue-500 text-sm font-bold text-white">
                     {avatarLetter}
                   </span>
-                  <span className="text-sm font-semibold">{displayName}</span>
+                  <span className="text-[0.95rem] font-semibold xl:text-base">{displayName}</span>
                 </Link>
               ) : (
-                <Link to="/customer/auth" className="btn-primary text-sm">
+                <Link to="/customer/auth" className="btn-primary text-[0.95rem] xl:text-base">
                   Sign In
                 </Link>
               )}
@@ -298,7 +321,7 @@ export default function CustomerHeader({ active }) {
                   key={item.id}
                   type="button"
                   onClick={() => handleSectionClick(item.id)}
-                  className={`block w-full rounded-lg px-3 py-2.5 text-left text-sm font-semibold transition-colors ${
+                  className={`block w-full rounded-lg px-3 py-2.5 text-left text-base font-semibold transition-colors ${
                     activeSection === item.id
                       ? "bg-slate-100 text-slate-900"
                       : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
@@ -311,21 +334,21 @@ export default function CustomerHeader({ active }) {
                 <>
                   <Link
                     to="/track-booking"
-                    className="mt-1 block w-full rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                    className="mt-1 block w-full rounded-lg px-3 py-2.5 text-left text-base font-semibold text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Track Booking
                   </Link>
                   <Link
                     to="/customer/portal"
-                    className="block w-full rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                    className="block w-full rounded-lg px-3 py-2.5 text-left text-base font-semibold text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     My Portal
                   </Link>
                   <Link
                     to="/customer/profile"
-                    className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 text-left text-sm font-semibold text-slate-900"
+                    className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 text-left text-base font-semibold text-slate-900"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {displayName}
@@ -334,7 +357,7 @@ export default function CustomerHeader({ active }) {
               ) : (
                 <Link
                   to="/customer/auth"
-                  className="mt-2 block w-full rounded-lg bg-slate-900 px-3 py-2.5 text-center text-sm font-semibold text-white"
+                  className="mt-2 block w-full rounded-lg bg-slate-900 px-3 py-2.5 text-center text-base font-semibold text-white"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Sign In

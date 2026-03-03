@@ -442,6 +442,23 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
+    if (!("scrollRestoration" in window.history)) return undefined;
+    const previous = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    return () => {
+      window.history.scrollRestoration = previous;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+    const frame = requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const sectionId = location.pathname.replace("/", "").trim();
     if (!sectionId) return;
 
@@ -525,7 +542,7 @@ export default function LandingPage() {
 
         <section
           id="home"
-          className="scroll-mt-24 mx-auto flex min-h-[calc(100vh-6.5rem)] w-full max-w-6xl flex-col justify-center px-4 pb-14 pt-[90px] text-center sm:px-6 lg:pb-20 lg:pt-[106px]"
+          className="scroll-mt-24 mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-4 pb-16 pt-[100px] text-center sm:px-6 lg:pb-24 lg:pt-[116px] 2xl:pt-[124px]"
         >
           <p
             data-reveal
@@ -535,13 +552,13 @@ export default function LandingPage() {
           </p>
           <h2
             data-reveal
-            className="mx-auto mt-4 max-w-4xl text-5xl font-extrabold leading-tight text-slate-900 sm:text-7xl lg:text-7xl"
+            className="mx-auto mt-4 max-w-5xl text-[clamp(2.2rem,6vw,4.9rem)] font-extrabold leading-[1.06] text-slate-900"
           >
             Premium Vehicle Service Management
           </h2>
           <p
             data-reveal
-            className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg"
+            className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg lg:text-[1.15rem]"
           >
             Reliable diagnostics, preventive maintenance, and transparent
             booking workflows for modern drivers and fleet owners.
@@ -555,7 +572,7 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-14">
+          <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-14 2xl:gap-6">
             <AnimatedMetric
               label="Years in Service"
               value={12}
