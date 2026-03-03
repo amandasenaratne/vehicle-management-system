@@ -240,7 +240,7 @@ export default function TrackBookingPage() {
                         value={phone}
                         onChange={(event) => setPhone(event.target.value)}
                         className="input-field pl-11"
-                        placeholder="+94 77 123 4567"
+                        placeholder="07xxxxxxxxxx"
                       />
                     </div>
                   </div>

@@ -199,6 +199,7 @@ export default function CustomerPortalPage() {
                 <input
                   id="phone"
                   type="tel"
+                  placeholder="07XXXXXXXX"
                   value={form.phone}
                   onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
                   className="input-field"
@@ -213,6 +214,7 @@ export default function CustomerPortalPage() {
                 <input
                   id="vehicleNumber"
                   type="text"
+                  placeholder="ABC-1234"
                   value={form.vehicleNumber}
                   onChange={(event) => setForm((prev) => ({ ...prev, vehicleNumber: event.target.value }))}
                   className="input-field"
