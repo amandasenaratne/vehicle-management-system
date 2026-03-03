@@ -7,15 +7,283 @@ import SiteFooter from "../components/layout/SiteFooter.jsx";
 const process = [
   {
     title: "Create Account",
-    description: "Sign up with your name, email, and password to access your secure customer workspace.",
+    description:
+      "Sign up with your name, email, and password to access your secure customer workspace.",
   },
   {
     title: "Book Appointment",
-    description: "Select service category, preferred date, and timeslot through the guided booking flow.",
+    description:
+      "Select service category, preferred date, and timeslot through the guided booking flow.",
   },
   {
     title: "Track Progress",
-    description: "Monitor status changes and complete service history from your customer portal.",
+    description:
+      "Monitor status changes and complete service history from your customer portal.",
+  },
+];
+
+function ShieldCheckIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="M12 3 5 6v6c0 4.4 2.9 7.8 7 9 4.1-1.2 7-4.6 7-9V6l-7-3Z" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+
+function ToolsIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="m14 7 3 3m-9 9-3-3m2-5 8-8 5 5-8 8H7v-5Z" />
+    </svg>
+  );
+}
+
+function WorkflowIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <rect x="3.5" y="4.5" width="7" height="5" rx="1.2" />
+      <rect x="13.5" y="4.5" width="7" height="5" rx="1.2" />
+      <rect x="8.5" y="14.5" width="7" height="5" rx="1.2" />
+      <path d="M10.5 7h3M12 9.5v5" />
+    </svg>
+  );
+}
+
+function EngineIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="M4 10h4l2-3h4l2 3h4v8H4z" />
+      <path d="M8 18v2m8-2v2M9 10V7m6 3V7" />
+    </svg>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="M7 3v3m10-3v3M4 8h16M5 5h14a1 1 0 0 1 1 1v13H4V6a1 1 0 0 1 1-1Z" />
+      <path d="M8 12h3v3H8z" />
+    </svg>
+  );
+}
+
+function SparkIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="m12 3 2.3 4.7L19 10l-4.7 2.3L12 17l-2.3-4.7L5 10l4.7-2.3L12 3Z" />
+      <path d="m6 18 1.1 2.2L9.3 21l-2.2 1.1L6 24l-1.1-1.9L2.7 21l2.2-.8L6 18Z" />
+    </svg>
+  );
+}
+
+function SafetyIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="M12 3 6 6v5c0 4.4 2.4 7.7 6 10 3.6-2.3 6-5.6 6-10V6z" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+
+function ChevronLeftIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+    >
+      <path d="m15 6-6 6 6 6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+    >
+      <path d="m9 6 6 6-6 6" />
+    </svg>
+  );
+}
+
+function MapPinIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="M12 21s7-5.8 7-11a7 7 0 1 0-14 0c0 5.2 7 11 7 11Z" />
+      <circle cx="12" cy="10" r="2.4" />
+    </svg>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <path d="M6.5 3.5h3l1.3 3.4-1.9 1.7a14 14 0 0 0 6.3 6.3l1.7-1.9 3.4 1.3v3a2 2 0 0 1-2.2 2 17 17 0 0 1-13.9-14 2 2 0 0 1 2.3-2.1Z" />
+    </svg>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+    >
+      <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+const serviceIcons = [
+  EngineIcon,
+  ToolsIcon,
+  SafetyIcon,
+  CalendarIcon,
+  SparkIcon,
+  WorkflowIcon,
+];
+
+const fallbackServices = [
+  {
+    id: "fallback-1",
+    name: "General Inspection",
+    description: "Complete multi-point health check for your vehicle.",
+  },
+  {
+    id: "fallback-2",
+    name: "Preventive Maintenance",
+    description: "Routine maintenance package to prevent downtime.",
+  },
+  {
+    id: "fallback-3",
+    name: "Diagnostics",
+    description: "Digital fault detection and system-level assessment.",
+  },
+  {
+    id: "fallback-4",
+    name: "Brake & Safety",
+    description: "Critical safety systems inspection and servicing.",
+  },
+  {
+    id: "fallback-5",
+    name: "Engine Tune-Up",
+    description: "Performance optimization and fuel efficiency tuning.",
+  },
+  {
+    id: "fallback-6",
+    name: "Electrical Service",
+    description: "Battery, alternator, and electrical system support.",
+  },
+];
+
+const aboutFeatures = [
+  {
+    title: "Certified Service Standards",
+    description:
+      "Our workshop practices follow structured quality checkpoints so every appointment meets consistent reliability and safety standards.",
+    Icon: ShieldCheckIcon,
+  },
+  {
+    title: "Modern Diagnostic Capability",
+    description:
+      "From routine servicing to advanced inspections, we combine skilled technicians with digital tooling for faster and more accurate outcomes.",
+    Icon: ToolsIcon,
+  },
+  {
+    title: "Transparent Service Workflow",
+    description:
+      "Every booking progresses through a clear status pipeline, giving customers operational visibility from request to completion.",
+    Icon: WorkflowIcon,
+  },
+];
+
+const contactChannels = [
+  {
+    label: "Location",
+    title: "Colombo Workshop Hub",
+    detail:
+      "Dedicated intake and diagnostics facility for daily vehicles and fleet operations.",
+    Icon: MapPinIcon,
+  },
+  {
+    label: "Hotline",
+    title: "+94 11 555 0190",
+    detail:
+      "Live support for booking coordination, service updates, and urgent inquiries.",
+    Icon: PhoneIcon,
+  },
+  {
+    label: "Email",
+    title: "support@autoservice.example",
+    detail:
+      "Structured ticket handling for estimates, service records, and follow-up care.",
+    Icon: MailIcon,
   },
 ];
 
@@ -53,8 +321,13 @@ function AnimatedMetric({ label, value, decimals = 0, suffix = "" }) {
   }).format(rounded);
 
   return (
-    <div data-reveal className="rounded-2xl border border-slate-200 bg-white/75 px-5 py-4 text-center shadow-[0_18px_38px_-30px_rgba(15,23,42,0.65)] backdrop-blur">
-      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">{label}</p>
+    <div
+      data-reveal
+      className="rounded-2xl border border-slate-200 bg-white/75 px-5 py-4 text-center shadow-[0_18px_38px_-30px_rgba(15,23,42,0.65)] backdrop-blur"
+    >
+      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+        {label}
+      </p>
       <p className="mt-2 text-3xl font-extrabold text-slate-900">
         {formatted}
         {suffix}
@@ -65,13 +338,20 @@ function AnimatedMetric({ label, value, decimals = 0, suffix = "" }) {
 
 export default function LandingPage() {
   const [services, setServices] = useState([]);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(1);
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
   const location = useLocation();
+  const servicesList = services.length ? services : fallbackServices;
+  const maxSlideIndex = Math.max(servicesList.length - cardsPerView, 0);
+  const totalPages = Math.max(Math.ceil(servicesList.length / cardsPerView), 1);
+  const activePage = Math.floor(slideIndex / cardsPerView);
 
   useEffect(() => {
     const loadServices = async () => {
       try {
         const { data } = await axiosInstance.get("/services?active=true");
-        setServices(data.data.slice(0, 6));
+        setServices(data.data);
       } catch {
         setServices([]);
       }
@@ -112,6 +392,37 @@ export default function LandingPage() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const syncCardsPerView = () => {
+      if (window.innerWidth >= 1280) {
+        setCardsPerView(3);
+      } else if (window.innerWidth >= 768) {
+        setCardsPerView(2);
+      } else {
+        setCardsPerView(1);
+      }
+    };
+
+    syncCardsPerView();
+    window.addEventListener("resize", syncCardsPerView);
+    return () => window.removeEventListener("resize", syncCardsPerView);
+  }, []);
+
+  useEffect(() => {
+    setSlideIndex((current) => Math.min(current, maxSlideIndex));
+  }, [maxSlideIndex]);
+
+  useEffect(() => {
+    if (isCarouselPaused || maxSlideIndex <= 0) return undefined;
+    const intervalId = setInterval(() => {
+      setSlideIndex((current) => {
+        const next = current + cardsPerView;
+        return next > maxSlideIndex ? 0 : next;
+      });
+    }, 4600);
+    return () => clearInterval(intervalId);
+  }, [isCarouselPaused, maxSlideIndex, cardsPerView]);
+
   return (
     <div className="min-h-screen">
       <CustomerHeader active="home" />
@@ -120,15 +431,28 @@ export default function LandingPage() {
         <div className="pointer-events-none absolute -left-20 top-0 h-80 w-80 rounded-full bg-blue-300/30 blur-3xl" />
         <div className="pointer-events-none absolute -right-24 top-24 h-72 w-72 rounded-full bg-cyan-300/20 blur-3xl" />
 
-        <section id="home" className="scroll-mt-24 mx-auto w-full max-w-6xl px-4 pb-12 pt-12 text-center sm:px-6 lg:pb-16 lg:pt-16">
-          <p data-reveal className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+        <section
+          id="home"
+          className="scroll-mt-24 mx-auto w-full max-w-6xl px-4 pb-12 pt-12 text-center sm:px-6 lg:pb-16 lg:pt-16"
+        >
+          <p
+            data-reveal
+            className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500"
+          >
             Premium Vehicle Care
           </p>
-          <h2 data-reveal className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          <h2
+            data-reveal
+            className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl"
+          >
             Enterprise-Grade Vehicle Service Management
           </h2>
-          <p data-reveal className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
-            Reliable diagnostics, preventive maintenance, and transparent booking workflows for modern drivers and fleet owners.
+          <p
+            data-reveal
+            className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg"
+          >
+            Reliable diagnostics, preventive maintenance, and transparent
+            booking workflows for modern drivers and fleet owners.
           </p>
           <div data-reveal className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to="/customer/auth" className="btn-primary px-6 py-3">
@@ -142,43 +466,89 @@ export default function LandingPage() {
           <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-3 sm:grid-cols-3">
             <AnimatedMetric label="Years in Service" value={12} suffix="+" />
             <AnimatedMetric label="Completed Jobs" value={18500} suffix="+" />
-            <AnimatedMetric label="Customer Satisfaction" value={98.4} suffix="%" decimals={1} />
+            <AnimatedMetric
+              label="Customer Satisfaction"
+              value={98.4}
+              suffix="%"
+              decimals={1}
+            />
           </div>
-          <p data-reveal className="mx-auto mt-5 max-w-2xl text-sm text-slate-600">
-            Customer Portal Enabled. Log in to review booking history, dates, services, and current statuses.
+          <p
+            data-reveal
+            className="mx-auto mt-5 max-w-2xl text-sm text-slate-600"
+          >
+            Customer Portal Enabled. Log in to review booking history, dates,
+            services, and current statuses.
           </p>
         </section>
 
-        <section id="about" className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-6 sm:px-6">
-          <div data-reveal className="surface-card p-6 sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">About</p>
-            <h3 className="mt-2 text-2xl font-bold text-slate-900">Trusted by Daily Drivers and Fleet Teams</h3>
-            <p className="mt-3 max-w-4xl text-sm leading-relaxed text-slate-600">
-              AutoService Center delivers reliable maintenance and repair operations with transparent communication, predictable turnaround times, and consistent service quality across every appointment.
-            </p>
-          </div>
-        </section>
-
-        <section id="services" className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-8 sm:px-6 lg:pb-12">
-          <div data-reveal className="surface-card p-6 sm:p-8">
-            <div className="panel-header">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Services</p>
-                <h3 className="mt-2 text-2xl font-bold text-slate-900">Workshop Capabilities</h3>
+        <section
+          id="about"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24"
+        >
+          <div className="surface-card p-8 sm:p-12 lg:p-16">
+            <div data-reveal className="mx-auto max-w-4xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                About
+              </p>
+              <h3 className="mt-3 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
+                Trusted by Daily Drivers and Fleet Teams
+              </h3>
+              <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-14 lg:gap-6">
+                {[
+                  { label: "Average Turnaround", value: "24-48 Hrs" },
+                  { label: "Technician Team", value: "35+" },
+                  { label: "Operational Uptime", value: "99.2%" },
+                ].map((item, index) => (
+                  <div
+                    key={item.label}
+                    data-reveal
+                    style={{ transitionDelay: `${index * 110}ms` }}
+                    className="surface-muted p-6 text-center lg:p-7"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">
+                      {item.label}
+                    </p>
+                    <p className="mt-2 text-2xl font-bold text-slate-900">
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <Link to="/customer/auth" className="btn-secondary text-sm">
-                Book a Service
-              </Link>
+
+              <p className="mt-7 text-base leading-8 text-slate-600">
+                AutoService Center operates as a modern vehicle service partner
+                focused on consistency, transparency, and delivery discipline.
+                Our goal is to turn traditional workshop operations into a
+                clear, trackable customer experience where every booking,
+                update, and final handover is visible and dependable.
+              </p>
+              <p className="mt-5 text-base leading-8 text-slate-600">
+                We serve both individual vehicle owners and operational fleets
+                with structured service workflows, experienced technicians, and
+                measurable quality controls. From preventive maintenance to
+                detailed diagnostics, each service request is managed with
+                process rigor and communication clarity to ensure predictable
+                turnaround and premium customer confidence.
+              </p>
             </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {(services.length
-                ? services
-                : [{ id: "fallback", name: "General Inspection", description: "Complete multi-point health check for your vehicle." }]
-              ).map((service) => (
-                <article key={service.id} className="surface-muted p-4">
-                  <h4 className="text-base font-bold text-slate-900">{service.name}</h4>
-                  <p className="mt-1 text-sm text-slate-600">
-                    {service.description || "Professional service delivered by certified technicians."}
+
+            <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3 lg:mt-14 lg:gap-7">
+              {aboutFeatures.map(({ title, description, Icon }, index) => (
+                <article
+                  key={title}
+                  data-reveal
+                  style={{ transitionDelay: `${index * 110}ms` }}
+                  className="surface-muted h-full p-6 text-center transition-transform duration-300 hover:-translate-y-1 lg:p-7"
+                >
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+                    <Icon />
+                  </span>
+                  <h4 className="mt-4 text-lg font-bold text-slate-900">
+                    {title}
+                  </h4>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    {description}
                   </p>
                 </article>
               ))}
@@ -186,44 +556,233 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="process" className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-8 sm:px-6 lg:pb-12">
-          <div data-reveal className="surface-card p-6 sm:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">How It Works</p>
-            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <section
+          id="services"
+          className="scroll-mt-24 relative overflow-hidden bg-gradient-to-br from-[#153f78] via-[#1d5ca7] to-[#2d7fd0] py-16 text-white lg:py-20"
+        >
+          <div className="pointer-events-none absolute -left-24 -top-20 h-64 w-64 rounded-full bg-blue-200/35 blur-3xl" />
+          <div className="pointer-events-none absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-cyan-100/35 blur-3xl" />
+          <div
+            data-reveal
+            className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6"
+          >
+            <div className="text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
+                Services
+              </p>
+              <h3 className="mt-2 text-3xl font-bold text-white sm:text-4xl">
+                Workshop Capabilities
+              </h3>
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-blue-100/90">
+                Structured service modules designed for reliability, safety, and
+                measurable operational quality.
+              </p>
+            </div>
+
+            <div
+              className="relative mt-10"
+              onMouseEnter={() => setIsCarouselPaused(true)}
+              onMouseLeave={() => setIsCarouselPaused(false)}
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  setSlideIndex((current) => {
+                    if (current <= 0) return maxSlideIndex;
+                    return Math.max(current - cardsPerView, 0);
+                  })
+                }
+                className="absolute left-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-blue-200/40 bg-blue-950/55 text-blue-50 transition-colors hover:bg-blue-900/70 md:inline-flex"
+                aria-label="Previous services"
+              >
+                <ChevronLeftIcon />
+              </button>
+
+              <div className="overflow-hidden px-0 md:px-14">
+                <div
+                  className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  style={{
+                    transform: `translateX(-${(slideIndex * 100) / cardsPerView}%)`,
+                  }}
+                >
+                  {servicesList.map((service, index) => {
+                    const Icon = serviceIcons[index % serviceIcons.length];
+                    return (
+                      <div
+                        key={service.id}
+                        className="w-full shrink-0 px-2"
+                        style={{
+                          flexBasis: `${100 / cardsPerView}%`,
+                        }}
+                      >
+                        <article className="h-full rounded-2xl border border-blue-100/30 bg-blue-950/30 p-6 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.95)] backdrop-blur">
+                          <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-300/20 text-blue-50">
+                            <Icon />
+                          </span>
+                          <h4 className="mt-4 text-lg font-bold text-white">
+                            {service.name}
+                          </h4>
+                          <p className="mt-3 text-sm leading-7 text-blue-100/90">
+                            {service.description ||
+                              "Professional service delivered by certified technicians with standardized quality checks."}
+                          </p>
+                        </article>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setSlideIndex((current) => {
+                    const next = current + cardsPerView;
+                    return next > maxSlideIndex ? 0 : next;
+                  })
+                }
+                className="absolute right-2 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-blue-200/40 bg-blue-950/55 text-blue-50 transition-colors hover:bg-blue-900/70 md:inline-flex"
+                aria-label="Next services"
+              >
+                <ChevronRightIcon />
+              </button>
+            </div>
+
+            <div className="mt-6 flex justify-center gap-2">
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() =>
+                    setSlideIndex(Math.min(index * cardsPerView, maxSlideIndex))
+                  }
+                  className={`h-2.5 rounded-full transition-all ${
+                    activePage === index
+                      ? "w-8 bg-blue-100"
+                      : "w-2.5 bg-blue-300/55 hover:bg-blue-200/80"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="mt-8 flex justify-center">
+              <Link
+                to="/customer/auth"
+                className="btn-primary px-8 py-3 text-sm"
+              >
+                Book a Service
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="process"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 lg:pb-20"
+        >
+          <div
+            data-reveal
+            className="surface-card overflow-hidden p-8 sm:p-10 lg:p-14"
+          >
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                How It Works
+              </p>
+              <h3 className="mt-3 text-3xl font-bold text-slate-900">
+                Service Journey in Three Steps
+              </h3>
+              <p className="mt-4 text-base leading-8 text-slate-600">
+                A streamlined operational flow from customer onboarding to
+                real-time tracking and final service completion.
+              </p>
+            </div>
+            <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3 lg:mt-12 lg:gap-6">
               {process.map((item, index) => (
-                <article key={item.title} className="surface-muted p-4">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                <article
+                  key={item.title}
+                  data-reveal
+                  style={{ transitionDelay: `${index * 110}ms` }}
+                  className="h-full rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-6 text-center shadow-[0_18px_32px_-28px_rgba(15,23,42,0.75)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_42px_-28px_rgba(15,23,42,0.8)] lg:p-7"
+                >
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
                     {index + 1}
                   </span>
-                  <h4 className="mt-3 text-base font-bold text-slate-900">{item.title}</h4>
-                  <p className="mt-1 text-sm text-slate-600">{item.description}</p>
+                  <h4 className="mt-4 text-lg font-bold text-slate-900">
+                    {item.title}
+                  </h4>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    {item.description}
+                  </p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="contact" className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6 lg:pb-16">
-          <div data-reveal className="surface-card p-6 sm:p-8">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div className="surface-muted p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">Location</p>
-                <p className="mt-1 text-sm font-semibold text-slate-900">Colombo Workshop Hub</p>
+        <section
+          id="contact"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:pb-24"
+        >
+          <div className="relative overflow-hidden rounded-[28px] border border-[#d5e2f4] bg-gradient-to-br from-[#102e58] via-[#174983] to-[#1f63aa] px-6 py-10 text-white shadow-[0_30px_65px_-38px_rgba(12,26,49,0.95)] sm:px-10 lg:px-14 lg:py-14">
+            <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
+            <div className="pointer-events-none absolute -right-16 bottom-0 h-56 w-56 rounded-full bg-cyan-200/25 blur-3xl" />
+
+            <div data-reveal className="relative z-10">
+              <div className="mx-auto max-w-3xl text-center">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
+                  Contact
+                </p>
+                <h3 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
+                  Reach Our Service Desk
+                </h3>
+                <p className="mt-4 text-base leading-8 text-blue-50/95">
+                  Connect with our support and operations teams through
+                  structured channels designed for fast response and clear
+                  resolution.
+                </p>
               </div>
-              <div className="surface-muted p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">Hotline</p>
-                <p className="mt-1 text-sm font-semibold text-slate-900">+94 11 555 0190</p>
+
+              <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-12 lg:gap-6">
+                {contactChannels.map(({ label, title, detail, Icon }, index) => (
+                  <article
+                    key={label}
+                    data-reveal
+                    style={{ transitionDelay: `${index * 110}ms` }}
+                    className="h-full rounded-2xl border border-white/25 bg-white/10 p-5 text-center backdrop-blur lg:p-6"
+                  >
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white">
+                      <Icon />
+                    </span>
+                    <p className="mt-4 text-xs font-semibold uppercase tracking-[0.1em] text-blue-100">
+                      {label}
+                    </p>
+                    <p className="mt-2 text-sm font-bold text-white lg:text-base">
+                      {title}
+                    </p>
+                    <p className="mt-3 text-sm leading-7 text-blue-50/90">
+                      {detail}
+                    </p>
+                  </article>
+                ))}
               </div>
-              <div className="surface-muted p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">Email</p>
-                <p className="mt-1 text-sm font-semibold text-slate-900">support@autoservice.example</p>
+
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/25 bg-white/10 p-5 backdrop-blur lg:mt-10 lg:p-6">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-100">
+                    Operations Access
+                  </p>
+                  <p className="mt-2 text-base font-semibold text-white">
+                    Staff or operations team?
+                  </p>
+                </div>
+                <Link
+                  to="/admin"
+                  className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition-colors duration-200 hover:bg-blue-50"
+                >
+                  Open Admin Access Portal
+                </Link>
               </div>
-            </div>
-            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm font-semibold text-slate-700">Staff or operations team?</p>
-              <Link to="/admin" className="btn-secondary text-sm">
-                Open Admin Access Portal
-              </Link>
             </div>
           </div>
         </section>
