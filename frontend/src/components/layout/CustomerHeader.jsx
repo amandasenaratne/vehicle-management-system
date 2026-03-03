@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
 
@@ -30,14 +30,14 @@ export default function CustomerHeader({ active }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [navItemsVisible, setNavItemsVisible] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!LANDING_PATHS.includes(location.pathname)) {
       setIsScrolled(true);
       return;
     }
 
     const syncScrolled = () => {
-      setIsScrolled(window.scrollY > 16);
+      setIsScrolled(window.scrollY > 0);
     };
 
     syncScrolled();
@@ -137,21 +137,32 @@ export default function CustomerHeader({ active }) {
   };
 
   const isLandingTop = LANDING_PATHS.includes(location.pathname) && !isScrolled;
+  const isLandingRoute = LANDING_PATHS.includes(location.pathname);
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`z-40 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        isLandingRoute ? "fixed left-0 right-0 top-0" : "sticky top-0"
+      } ${
         isLandingTop
-          ? "border-transparent bg-transparent"
-          : "border-slate-200 bg-white shadow-[0_12px_34px_-26px_rgba(15,23,42,0.55)]"
+          ? "border-b-0 !bg-transparent shadow-none"
+          : "border-b border-slate-200 bg-white shadow-[0_12px_34px_-26px_rgba(15,23,42,0.55)]"
       }`}
+      style={
+        isLandingTop
+          ? { backgroundColor: "transparent", boxShadow: "none", borderColor: "transparent" }
+          : undefined
+      }
     >
       <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6">
         <div className="relative flex items-center justify-between gap-4">
           <Link
             to="/"
             onClick={handleBrandClick}
-            className="flex items-center gap-3"
+            style={{ transitionDelay: "60ms" }}
+            className={`flex items-center gap-3 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              navItemsVisible ? "opacity-100" : "opacity-0"
+            }`}
           >
             <BrandMark />
             <div className="hidden sm:block">
@@ -175,10 +186,8 @@ export default function CustomerHeader({ active }) {
                   activeSection === item.id
                     ? "text-slate-900"
                     : "text-slate-600 hover:text-slate-900"
-                } transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  navItemsVisible
-                    ? "translate-y-0 opacity-100"
-                    : "-translate-y-2 opacity-0"
+                } transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  navItemsVisible ? "opacity-100" : "opacity-0"
                 }`}
               >
                 {item.label}
@@ -190,7 +199,10 @@ export default function CustomerHeader({ active }) {
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="inline-flex h-10 w-10 items-center justify-center text-slate-900 transition-opacity hover:opacity-70 lg:hidden"
+              style={{ transitionDelay: "280ms" }}
+              className={`inline-flex h-10 w-10 items-center justify-center text-slate-900 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:opacity-70 lg:hidden ${
+                navItemsVisible ? "opacity-100" : "opacity-0"
+              }`}
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -199,7 +211,12 @@ export default function CustomerHeader({ active }) {
               </svg>
             </button>
 
-            <div className="hidden items-center justify-end gap-3 lg:flex">
+            <div
+              style={{ transitionDelay: "420ms" }}
+              className={`hidden items-center justify-end gap-3 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:flex ${
+                navItemsVisible ? "opacity-100" : "opacity-0"
+              }`}
+            >
               {customerUser ? (
                 <div className="hidden items-center gap-4 border-r border-slate-300 pr-4 xl:flex">
                   <Link
