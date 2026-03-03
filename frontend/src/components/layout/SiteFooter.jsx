@@ -10,7 +10,7 @@ export default function SiteFooter() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">AutoService Center</p>
           <h3 className="mt-2 text-xl font-bold text-slate-900">Premium Vehicle Service Operations</h3>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-slate-600">
-            Enterprise-grade diagnostics and maintenance workflows with transparent booking and service tracking.
+            diagnostics and maintenance workflows with transparent booking and service tracking.
           </p>
         </div>
 

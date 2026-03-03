@@ -357,7 +357,7 @@ const customerReviews = [
     service: "Brake and Safety Service",
     rating: 5,
     quote:
-      "Professional team, predictable timelines, and clean service records. It feels like a proper enterprise support experience.",
+      "Professional team, predictable timelines, and clean service records. It feels like a proper premium support experience.",
   },
 ];
 
@@ -524,9 +524,9 @@ export default function LandingPage() {
           </p>
           <h2
             data-reveal
-            className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl"
+            className="mx-auto mt-4 max-w-4xl text-5xl font-extrabold leading-tight text-slate-900 sm:text-7xl lg:text-7xl"
           >
-            Enterprise-Grade Vehicle Service Management
+            Premium Vehicle Service Management
           </h2>
           <p
             data-reveal
@@ -794,25 +794,115 @@ export default function LandingPage() {
             data-reveal
             className="surface-card mt-10 overflow-hidden p-10 sm:mt-12 sm:p-12 lg:p-16"
           >
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-7">
-              {process.map((item, index) => (
-                <article
-                  key={item.title}
-                  data-reveal
-                  style={{ transitionDelay: `${index * 110}ms` }}
-                  className="h-full rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-6 text-center shadow-[0_18px_32px_-28px_rgba(15,23,42,0.75)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_42px_-28px_rgba(15,23,42,0.8)] lg:p-7"
-                >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
-                    {index + 1}
-                  </span>
-                  <h4 className="mt-4 text-lg font-bold text-slate-900">
-                    {item.title}
-                  </h4>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
-                    {item.description}
-                  </p>
-                </article>
-              ))}
+            <div className="space-y-4 md:hidden">
+              {process.map((item, index) => {
+                const StepIcon = [ShieldCheckIcon, CalendarIcon, WorkflowIcon][
+                  index % 3
+                ];
+                return (
+                  <div key={item.title}>
+                    <article
+                      data-reveal
+                      style={{ transitionDelay: `${index * 110}ms` }}
+                      className="rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-6 shadow-[0_18px_32px_-28px_rgba(15,23,42,0.75)]"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                          {index + 1}
+                        </span>
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+                          <StepIcon />
+                        </span>
+                      </div>
+                      <h4 className="mt-4 text-lg font-bold text-slate-900">
+                        {item.title}
+                      </h4>
+                      <p className="mt-3 text-sm leading-7 text-slate-600">
+                        {item.description}
+                      </p>
+                    </article>
+                    {index < process.length - 1 ? (
+                      <div className="my-2 flex justify-center text-blue-400/90">
+                        <svg viewBox="0 0 24 32" className="h-8 w-8" fill="none">
+                          <path
+                            d="M12 2v11h6v8"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="m13 18 5 5 5-5"
+                            transform="translate(-6 4)"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center md:gap-4 lg:gap-6">
+              {process.map((item, index) => {
+                const StepIcon = [ShieldCheckIcon, CalendarIcon, WorkflowIcon][
+                  index % 3
+                ];
+                return (
+                  <div key={item.title} className="contents">
+                    <article
+                      data-reveal
+                      style={{ transitionDelay: `${index * 110}ms` }}
+                      className={`h-full rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-6 shadow-[0_18px_32px_-28px_rgba(15,23,42,0.75)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_42px_-28px_rgba(15,23,42,0.8)] lg:p-7 ${
+                        index === 1 ? "md:translate-y-7" : "md:-translate-y-2"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                          {index + 1}
+                        </span>
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+                          <StepIcon />
+                        </span>
+                      </div>
+                      <h4 className="mt-4 text-lg font-bold text-slate-900">
+                        {item.title}
+                      </h4>
+                      <p className="mt-3 text-sm leading-7 text-slate-600">
+                        {item.description}
+                      </p>
+                    </article>
+                    {index < process.length - 1 ? (
+                      <div className="hidden md:flex items-center justify-center text-blue-400/90">
+                        <svg viewBox="0 0 72 40" className="h-10 w-[72px]" fill="none">
+                          <path
+                            d={
+                              index === 0
+                                ? "M2 14h20v12h22V14h20"
+                                : "M2 26h20V14h22v12h20"
+                            }
+                            stroke="currentColor"
+                            strokeWidth="1.9"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d={index === 0 ? "m61 8 7 6-7 6" : "m61 20 7 6-7 6"}
+                            stroke="currentColor"
+                            strokeWidth="1.9"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

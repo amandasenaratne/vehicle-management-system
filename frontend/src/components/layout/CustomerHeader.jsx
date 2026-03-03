@@ -12,7 +12,13 @@ const SECTION_LINKS = [
 function BrandMark() {
   return (
     <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 text-white shadow">
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
         <path d="M4 14h16" />
         <path d="M6 14 8 8h8l2 6" />
         <path d="M6.5 17a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm11 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
@@ -61,7 +67,9 @@ export default function CustomerHeader({ active }) {
 
   useEffect(() => {
     if (location.pathname !== "/") return;
-    const sectionElements = SECTION_LINKS.map((item) => document.getElementById(item.id)).filter(Boolean);
+    const sectionElements = SECTION_LINKS.map((item) =>
+      document.getElementById(item.id),
+    ).filter(Boolean);
     if (!sectionElements.length) return;
 
     const observer = new IntersectionObserver(
@@ -86,7 +94,9 @@ export default function CustomerHeader({ active }) {
   const handleSectionClick = (id) => {
     setActiveSection(id);
     if (location.pathname === "/") {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .getElementById(id)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
       window.history.replaceState(null, "", `/#${id}`);
       return;
     }
@@ -112,11 +122,19 @@ export default function CustomerHeader({ active }) {
     >
       <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6">
         <div className="relative flex items-center justify-between gap-4">
-          <Link to="/" onClick={handleBrandClick} className="flex items-center gap-3">
+          <Link
+            to="/"
+            onClick={handleBrandClick}
+            className="flex items-center gap-3"
+          >
             <BrandMark />
             <div className="hidden sm:block">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Vehicle Management System</p>
-              <h1 className="text-lg font-bold text-slate-900">AutoService Center</h1>
+              <h1 className="text-lg font-bold text-slate-900">
+                AutoService Center
+              </h1>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                Vehicle Management System
+              </p>
             </div>
           </Link>
 
@@ -127,7 +145,9 @@ export default function CustomerHeader({ active }) {
                 type="button"
                 onClick={() => handleSectionClick(item.id)}
                 className={`text-sm font-semibold transition-colors ${
-                  location.pathname === "/" && activeSection === item.id ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                  location.pathname === "/" && activeSection === item.id
+                    ? "text-slate-900"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 {item.label}
@@ -141,7 +161,9 @@ export default function CustomerHeader({ active }) {
                 <Link
                   to="/track-booking"
                   className={`text-sm font-semibold transition-colors ${
-                    active === "track" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                    active === "track"
+                      ? "text-slate-900"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   Track Booking
@@ -149,7 +171,9 @@ export default function CustomerHeader({ active }) {
                 <Link
                   to="/customer/portal"
                   className={`text-sm font-semibold transition-colors ${
-                    active === "portal" ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                    active === "portal"
+                      ? "text-slate-900"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   My Portal
@@ -157,11 +181,16 @@ export default function CustomerHeader({ active }) {
               </div>
             ) : null}
             {customerUser ? (
-              <Link to="/customer/profile" className="flex items-center gap-2 rounded-lg px-1 py-1 text-slate-700 transition-colors hover:text-slate-900">
+              <Link
+                to="/customer/profile"
+                className="flex items-center gap-2 rounded-lg px-1 py-1 text-slate-700 transition-colors hover:text-slate-900"
+              >
                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-blue-500 text-sm font-bold text-white">
                   {avatarLetter}
                 </span>
-                <span className="hidden text-sm font-semibold sm:inline-flex">{displayName}</span>
+                <span className="hidden text-sm font-semibold sm:inline-flex">
+                  {displayName}
+                </span>
               </Link>
             ) : (
               <Link to="/customer/auth" className="btn-primary text-sm">
@@ -178,7 +207,9 @@ export default function CustomerHeader({ active }) {
               type="button"
               onClick={() => handleSectionClick(item.id)}
               className={`text-sm font-semibold transition-colors ${
-                location.pathname === "/" && activeSection === item.id ? "text-slate-900" : "text-slate-600 hover:text-slate-900"
+                location.pathname === "/" && activeSection === item.id
+                  ? "text-slate-900"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               {item.label}
