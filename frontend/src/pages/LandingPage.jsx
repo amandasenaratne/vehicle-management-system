@@ -542,7 +542,7 @@ export default function LandingPage() {
 
         <section
           id="home"
-          className="scroll-mt-24 mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-4 pb-16 pt-[100px] text-center sm:px-6 lg:pb-24 lg:pt-[116px] 2xl:pt-[124px]"
+          className="scroll-mt-24 mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-4 pb-16 pt-[130px] text-center sm:px-6 lg:pb-24 lg:pt-[116px] 2xl:pt-[124px]"
         >
           <p
             data-reveal
