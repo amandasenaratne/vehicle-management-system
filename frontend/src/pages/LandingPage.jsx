@@ -684,7 +684,7 @@ export default function LandingPage() {
 
         <section
           id="services"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-6"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-2"
         >
           <div data-reveal className="w-full">
             <div className="text-center">
