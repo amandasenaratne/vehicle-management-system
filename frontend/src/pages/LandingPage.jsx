@@ -607,7 +607,7 @@ export default function LandingPage() {
 
         <section
           id="about"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-6"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
@@ -684,7 +684,7 @@ export default function LandingPage() {
 
         <section
           id="services"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-6"
         >
           <div data-reveal className="w-full">
             <div className="text-center">
@@ -804,7 +804,7 @@ export default function LandingPage() {
 
         <section
           id="process"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-12"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -946,7 +946,7 @@ export default function LandingPage() {
 
         <section
           id="faq"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-12"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -990,7 +990,7 @@ export default function LandingPage() {
 
         <section
           id="reviews"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-12"
         >
           <div data-reveal className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -1058,7 +1058,7 @@ export default function LandingPage() {
 
         <section
           id="contact"
-          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:pb-24 lg:pt-16"
+          className="scroll-mt-24 mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:pb-22 lg:pt-10"
         >
           <div className="relative overflow-hidden rounded-[28px] border border-[#d5e2f4] bg-gradient-to-br from-[#102e58] via-[#174983] to-[#1f63aa] px-6 py-10 text-white shadow-[0_30px_65px_-38px_rgba(12,26,49,0.95)] sm:px-10 lg:px-14 lg:py-14">
             <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
